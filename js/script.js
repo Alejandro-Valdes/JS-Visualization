@@ -1,6 +1,11 @@
 var MAP_WIDTH  = 960;
 var MAP_HEIGHT = 600;
 
+// define zoom behaviour
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", zooming);
+
 // calculating the center offline and saving it in a additional var could be 
 // very useful for text placement and transitions
 var data = [{ name:"Switzerland",
@@ -15,17 +20,28 @@ var data = [{ name:"Switzerland",
 
 var map = d3.select("#map")
 	.attr("width", MAP_WIDTH)
-	.attr("height", MAP_HEIGHT)
-	.append("g")
-		.attr("id", "map-handle");
+	.attr("height", MAP_HEIGHT);
 
-var infoText = map.append("text")
+var container = map.append("g")
+		.attr("id", "map-handle")
+		.call(zoom);
+
+// to enable drag on all positions add rect in background with background color
+container.append("rect")
+	.attr("width", MAP_WIDTH)
+	.attr("height", MAP_HEIGHT)
+	.style("fill", "#222");
+
+var infoText = container.append("text")
 	.attr("id", "info-text")
 	.attr("x", 50)
 	.attr("y", 50)
-	.text("");
+	.text("")
+	.append("rect")
+		.attr("height", 5)
+		.style("fill", "#BEF");
 
-var countries = map.selectAll(".country")
+var countries = container.selectAll(".country")
 		.data(data)
 	.enter().append("g")
 		.attr("class", "country")
@@ -38,15 +54,21 @@ countries.append("path")
 	.attr("d", function(d) { return d.path; });
 countries.append("text")
 	.attr("class", "countryText")
-	.text(function(d) { return d.name; });
+	.attr("name", function(d) { return d.name; });
 
 
 //--- functions ---//
 function countryHover() {
 	var countryPath = d3.select(this).select(".countryPath");
 	var countryText = d3.select(this).select(".countryText");
+	var bar = infoText.select("rect");
 
-	infoText.text(countryText.text()).transition()
+	bar.transition()
+		.duration(1500)
+		.style("fill-opacity", "0")
+		.attr("width", 0);
+		
+	infoText.text(countryText.attr("name")).transition()
 		.duration(200)
 		.style("fill-opacity", "100")
 		.attr("x", 50);	
@@ -60,6 +82,12 @@ function countryHover() {
 function countryOut() {
 	var countryPath = d3.select(this).select(".countryPath");
 	var countryText = d3.select(this).select(".countryText");
+	var bar = infoText.select("rect");
+
+	bar.transition()
+		.duration(1500)
+		.style("fill-opacity", "0")
+		.attr("width", 0);
 
 	infoText.transition()
 		.duration(1500)
@@ -70,4 +98,11 @@ function countryOut() {
 		.duration(500)
 		.style("fill", "#ddd")
 		.style("stroke-width","1");
+}
+
+//--- navigation functions ---//
+function zooming() {
+	container.transition()
+		.duration(500)
+		.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
