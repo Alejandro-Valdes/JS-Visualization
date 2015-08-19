@@ -35,42 +35,6 @@ p {
   margin-top:10px;
 }
 
-/* first tutorial: Let’s Make a Bar Chart, I*/
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-}
-/**/
-
-/* second tutorial: Let’s Make a Bar Chart, II*/
-.chart rect {
-  fill: steelblue;
-}
-
-.chart text {
-  fill: white;
-  font: 10px sans-serif;
-  text-anchor: end;
-}
-/**/
-
-/* third tutorial: Let's Make a Bar Chart, III*/
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-/**/
-
 @media all and (max-width: 500px) {
   h2 {
     padding-left: 10px;
