@@ -50,17 +50,11 @@ p {
 /* map styles */
 .country path {
   fill: #ddd;
-  stroke: #aaa;
-  stroke-width: 0.01;
-  stroke-linejoin: round;
   cursor: pointer;
 }
 
 .selectedCountry path {
   fill: #ddd;
-  stroke: #aaa;
-  stroke-width: 0.01;
-  stroke-linejoin: round;
   cursor: pointer;
 }
 
@@ -69,5 +63,23 @@ p {
   font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
   fill: #BEF;
+  font-size: 0.8em;
+}
+
+/* pie charts and graphs */
+
+/* misc */
+#back-btn {
+  font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 700;
+  fill: #FFF;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.legend {
+  font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+  fill: #FFF;
   font-size: 0.8em;
 }
