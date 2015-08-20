@@ -31,7 +31,7 @@ p {
 }
  
 .container {
-  width: 80%;
+  width: 85%;
   /*max-width: 1200px;*/
   margin: 0 auto;
   margin-top:10px;
@@ -70,4 +70,11 @@ p {
   font-weight: 300;
   fill: #BEF;
   font-size: 0.8em;
+}
+
+#chart-handle text {
+  font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 700;
+  color: #FFF;
+  font-size: 1.2em;
 }
