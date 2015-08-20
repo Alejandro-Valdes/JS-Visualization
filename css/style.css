@@ -51,7 +51,15 @@ p {
 .country path {
   fill: #ddd;
   stroke: #aaa;
-  stroke-width: 1;
+  stroke-width: 0.01;
+  stroke-linejoin: round;
+  cursor: pointer;
+}
+
+.selectedCountry path {
+  fill: #ddd;
+  stroke: #aaa;
+  stroke-width: 0.01;
   stroke-linejoin: round;
   cursor: pointer;
 }
