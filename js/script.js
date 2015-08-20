@@ -1,4 +1,4 @@
-var MAP_WIDTH  = 960,
+var MAP_WIDTH  = 1200,
 	MAP_HEIGHT = 600;
 
 // define zoom behaviour
@@ -32,9 +32,12 @@ var container = svg.append("g")
 
 // to enable drag on all positions add rect in background with background color
 container.append("rect")
-	.attr("width", MAP_WIDTH)
-	.attr("height", MAP_HEIGHT)
-	.style("fill", "#222");
+	.attr("x", -MAP_WIDTH)
+	.attr("y", -MAP_HEIGHT)
+	.attr("width", 2*MAP_WIDTH)
+	.attr("height", 2*MAP_HEIGHT)
+	.style("fill", "#082935");
+	// .style("fill", "#222");
 
 var infoText = svg.append("g")
 	.attr("id", "info-text");
@@ -89,6 +92,8 @@ var pieChart = chart.append("g")
 //--- functions ---//
 //--- navigation functions ---//
 function zoomed() {
+	countries.select("path").style("stroke-width", countries.style("stroke-width")/2);
+
 	container.transition()
 		.duration(500)
 		.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -104,8 +109,7 @@ function countryHover() {
 	infoText.select("rect").transition()
 		.delay(200)
 		.duration(500)
-		.style("fill-opacity", 1)
-		.attr("width", 128+countryText.attr("name").length*7)
+		.attr("width", 128+countryText.attr("name").length*7);
 	infoText.transition()
 	  	.duration(200)
 	 	.style("fill-opacity", 1)
@@ -124,8 +128,7 @@ function countryOut() {
 	infoText.select("rect").transition()
 		.delay(1500)
 		.duration(1500)
-		.style("fill-opacity", 0)
-		.attr("width", 0)
+		.attr("width", 0);
 	infoText.transition()
 	  	.duration(1500)
 	 	.style("fill-opacity", 0)
@@ -138,6 +141,7 @@ function countryOut() {
 }
 
 function countryClickedOn() {
+	// map shift
 	var country = d3.select(this);
 
 	countries.on("click", 0)
@@ -153,25 +157,49 @@ function countryClickedOn() {
 		.duration(500)
 		.style("fill-opacity", 0)
 		.style("stroke-opacity", 0);
-	
+
 	country.attr("class", "country");
+
+	// induces bad behaviour
+	// container.transition()
+	// 	.duration(500)
+	// 	.attr("transform", "translate(0,0)scale(1,1)");
 	container.transition()
-		.duration(1000)
-		.attr("transform", "translate(0,0)scale(1,1)");
-	container.transition()
-		.delay(1100)
+		.delay(600)
 		.duration(2000)
 		.attr("transform", "translate(0," + -MAP_HEIGHT + ")");
 	chart.transition()
-		.delay(1100)
+		.delay(600)
 		.duration(2000)
 		.attr("transform", "translate(0,0)");
+
 	country.select("path").transition()
-		.delay(500)
+		.delay(2000)
 		.style("fill", "#ddd");
+
+	// title
+	infoText.transition()
+		.delay(800)
+		.duration(1000)
+		.attr("transform", "translate(" + MAP_WIDTH/2 + ",0)");
+	infoText.select("text").transition()
+		.duration(1000)
+		.attr("x", -infoText.select("text").text().length/4 + "em")
+		.style("fill", "#FFF");
+	infoText.select("rect").transition()
+		.delay(800)
+		.duration(1000)
+		// .ease("elastic")
+		.attr("x", -infoText.select("text").text().length*0.6 + "em")
+		.attr("width", infoText.select("text").text().length*1.2 + "em")
+		.attr("height", 4)
+		.attr("rx", 1)
+		.attr("ry", 1)
+		.style("fill", "#FFF");;
 }
 
 function countryClickedOff() {
+	// map shift
 	container.transition()
 		.delay(500)
 		.duration(2000)
@@ -186,7 +214,29 @@ function countryClickedOff() {
 		.on("mouseover", countryHover)
 		.on("mouseout", countryOut);
 	countries.transition()
+		.delay(2400)
 		.duration(500)
 		.style("fill-opacity", 1)
 		.style("stroke-opacity", 1);
+
+	// title
+	infoText.transition()
+		.delay(800)
+		.duration(1000)
+		.attr("transform", "translate(" + 50 + ",0)");
+	infoText.select("text").transition()
+		.delay(800)
+		.duration(1500)
+		.attr("x", 50)
+		.attr("y", 50)
+		.style("fill", "#BEF");
+	infoText.select("rect").transition()
+		.delay(800)
+		.duration(1500)
+		.attr("x", -50)
+		.attr("width", 128+infoText.select("text").text().length*7)
+		.attr("height", 1)
+		.attr("rx", 0)
+		.attr("ry", 0)
+		.style("fill", "#BEF");;
 }
