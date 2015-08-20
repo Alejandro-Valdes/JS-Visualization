@@ -25,14 +25,12 @@ h1, h2, h3, h4, h5, h6 {
 }
  
 p {
-  font-size: 1em;
-  color: #BEF;
   margin-bottom: .5em;
 }
  
 .container {
-  width: 85%;
-  /*max-width: 1200px;*/
+  width: 80%;
+  max-width: 1200px;
   margin: 0 auto;
   margin-top:10px;
 }
@@ -47,27 +45,24 @@ p {
   }
 }
 
-/* map styles */
-.country path {
-  fill: #ddd;
-  stroke: #aaa;
-  stroke-width: 0.01;
-  stroke-linejoin: round;
-  cursor: pointer;
+.section path {
+  fill: #ccc;
+  stroke: #333;
+  stroke-width: 1.5px;
+  transition: fill 250ms linear;
+  transition-delay: 150ms;
 }
 
-.selectedCountry path {
-  fill: #ddd;
-  stroke: #aaa;
-  stroke-width: 0.01;
-  stroke-linejoin: round;
-  cursor: pointer;
+.chart text {
+  font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 700;
+  fill: #FFF;
+  font-size: 1em;
 }
 
-/* info text */
-#map #info-text {
+#legend {
   font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
-  fill: #BEF;
+  fill: #FFF;
   font-size: 0.8em;
 }

@@ -1,8 +1,5 @@
-var MAP_WIDTH  = 960;
-var MAP_HEIGHT = 600;
-
-// chart shares height with map
-var CHART_WIDTH = 340; 
+var MAP_WIDTH  = 960,
+	MAP_HEIGHT = 600;
 
 // define zoom behaviour
 var zoom = d3.behavior.zoom()
@@ -25,7 +22,7 @@ var data = [{ name: "Spain", path:"M470.66,327.92l0,0.13l0.11,0.18l0.11,0.07l0.2
 ];
 
 var svg = d3.select("#map")
-	.attr("width", MAP_WIDTH+CHART_WIDTH)
+	.attr("width", MAP_WIDTH)
 	.attr("height", MAP_HEIGHT);
 
 //--- map ---//
@@ -66,20 +63,28 @@ countries.append("text")
 	.attr("name", function(d) { return d.name; });
 
 //--- chart ---//
+var CHART_WIDTH = MAP_WIDTH/4,
+	CHAR_HEIGHT = MAP_HEIGHT/4;
+
 var chart = svg.append("g")
 	.attr("id", "chart-handle")
-	.attr("transform", "translate(" + MAP_WIDTH + ",0)");
+	.attr("transform", "translate(0," + MAP_HEIGHT + ")");
 
-chart.append("rect")
-	.attr("width", CHART_WIDTH)
-	.attr("height", MAP_HEIGHT)
-	.attr("rx", 10)
-	.attr("ry", 10)
-	.style("fill", "steelblue");
+// var chartTitle = chart.append("text")
+// 	.attr("y", "1.2em")
+// 	.attr("dx", ("test title").length/2 + "em")
+// 	.text("test title");
 
-var chartTitle = chart.append("text")
-	.attr("x", CHART_WIDTH/2)
-	.attr("y", "1.2em");
+var pieChart = chart.append("g")
+	.attr("class", "pieChart")
+	.attr("transform", "translate(0,0)")
+	.append("rect")
+		.attr("y", CHAR_HEIGHT)
+		.attr("width", CHART_WIDTH)
+		.attr("height", CHAR_HEIGHT)
+		.style("fill", "steelblue")
+		.on("click", countryClickedOff);
+
 
 //--- functions ---//
 //--- navigation functions ---//
@@ -110,10 +115,6 @@ function countryHover() {
 		.duration(500)
 		.style("fill", "steelblue")
 		.style("stroke-width","0");
-
-	// chart changes
-	chartTitle.attr("dx", -(infoText.select("text").text()).length/4 + "em")
-		.text(infoText.select("text").text());
 }
 
 function countryOut() {
@@ -137,32 +138,48 @@ function countryOut() {
 }
 
 function countryClickedOn() {
-	console.log(d3.select(this).select("text").attr("name"));
-
 	var country = d3.select(this);
 
-	country.attr("class", "selectedCountry")
-		.style("fill", "steelblue")
-		.on("click", countryClickedOff)
-		.on("mouseover", 0)
-		.on("mouseout", 0);;
-
-	countries = d3.selectAll(".country")
 	countries.on("click", 0)
 		.on("mouseover", 0)
 		.on("mouseout", 0);
+
+	country.attr("class", "selectedCountry")
+		.style("fill", "steelblue");
+
+	countries = d3.selectAll(".country")
+
 	countries.transition()
 		.duration(500)
 		.style("fill-opacity", 0)
 		.style("stroke-opacity", 0);
+	
+	country.attr("class", "country");
+	container.transition()
+		.duration(1000)
+		.attr("transform", "translate(0,0)scale(1,1)");
+	container.transition()
+		.delay(1100)
+		.duration(2000)
+		.attr("transform", "translate(0," + -MAP_HEIGHT + ")");
+	chart.transition()
+		.delay(1100)
+		.duration(2000)
+		.attr("transform", "translate(0,0)");
+	country.select("path").transition()
+		.delay(500)
+		.style("fill", "#ddd");
 }
 
 function countryClickedOff() {
-	console.log(d3.select(this).select("text").attr("name"));
-
-	var country = d3.select(this);
-
-	country.attr("class", "country");
+	container.transition()
+		.delay(500)
+		.duration(2000)
+		.attr("transform", "translate(0,0)");
+	chart.transition()
+		.delay(500)
+		.duration(2000)
+		.attr("transform", "translate(0," + MAP_HEIGHT + ")");
 
 	countries = d3.selectAll(".country")
 	countries.on("click", countryClickedOn)
@@ -172,4 +189,4 @@ function countryClickedOff() {
 		.duration(500)
 		.style("fill-opacity", 1)
 		.style("stroke-opacity", 1);
-}	
+}
