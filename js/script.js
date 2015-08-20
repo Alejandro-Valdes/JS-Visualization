@@ -205,7 +205,7 @@ function countryClickedOn() {
 		.attr("height", 4)
 		.attr("rx", 1)
 		.attr("ry", 1)
-		.style("fill", "#FFF");;
+		.style("fill", "#FFF");
 }
 
 function countryClickedOff() {
