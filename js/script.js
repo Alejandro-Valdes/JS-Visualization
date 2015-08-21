@@ -188,12 +188,12 @@ function countryClickedOn() {
 	// map and chart shift
 	container.transition()
 		.duration(600)
-		.attr("transform", "translate(0,0)scale(1)");
+		.attr("transform", "translate(0,0.001)scale(1.001)");
 
 	container.transition()
 		.delay(600)
 		.duration(2000)
-		.attr("transform", "translate(0," + -MAP_HEIGHT + ")scale(1)");
+		.attr("transform", "translate(0," + -MAP_HEIGHT + ")scale(1.001)");
 	chart.transition()
 		.delay(600)
 		.duration(2000)
