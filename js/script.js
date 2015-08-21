@@ -230,7 +230,7 @@ function countryClickedOff() {
 	container.transition()
 		.delay(500)
 		.duration(2000)
-		.attr("transform", "translate(0,0)scale(1.000000001)"); // small difference needed because otherwise d3 would delete the scale string messing up all further animations
+		.attr("transform", "translate(0,0.001)scale(1.001)"); // small difference needed because otherwise d3 would delete the scale string messing up all further animations
 	chart.transition()
 		.delay(500)
 		.duration(2000)
