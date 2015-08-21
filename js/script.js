@@ -30,7 +30,10 @@ var svg = d3.select("#map")
 //--- map ---//
 var container = svg.append("g")
 		.attr("id", "map-handle")
+		.attr("transform", "translate(0,0)scale(1)")
 		.call(zoom);
+
+// zoom.center(d3.mouse(document.getElementById("map")));
 
 // to enable drag on all positions add rect in background with background color
 container.append("rect")
@@ -76,10 +79,24 @@ var CHART_SIZE = Math.min(0.6*MAP_WIDTH, 0.6*MAP_HEIGHT);
 
 var chartLegend = chart.append("g")
 	.attr("class", "legend")
-	.attr("transform", "translate(20," + CHART_SIZE/2 + ")")
-	.append("rect")
+	.attr("transform", "translate(20," + CHART_SIZE/2 + ")");
+
+chartLegend.append("rect")
 		.attr("width", 100)
-		.attr("height", CHART_SIZE);
+		.attr("height", CHART_SIZE)
+		.style("fill", "#0DD");
+
+chartLegend.append("text")
+	.attr("dx", "1.5em") // 1.5em due to ("Legend").length/4
+	.attr("y", "1em")
+	.text("Legend");
+
+// var legendEntries = chartLegend.selectAll("text")
+// 		.data(data)
+// 	.enter().append("text")
+// 	.attr("class", "legendEntry")
+// 	.attr("x", -("Text").length + "em")
+// 	.text("Text");
 
 // placeholder
 var pieChart = chart.append("g")
@@ -171,12 +188,12 @@ function countryClickedOn() {
 	// map and chart shift
 	container.transition()
 		.duration(600)
-		.attr("transform", "translate(0,0)scale(1,1)");
+		.attr("transform", "translate(0,0)scale(1)");
 
 	container.transition()
 		.delay(600)
 		.duration(2000)
-		.attr("transform", "translate(0," + -MAP_HEIGHT + ")");
+		.attr("transform", "translate(0," + -MAP_HEIGHT + ")scale(1)");
 	chart.transition()
 		.delay(600)
 		.duration(2000)
@@ -213,7 +230,7 @@ function countryClickedOff() {
 	container.transition()
 		.delay(500)
 		.duration(2000)
-		.attr("transform", "translate(0,0)scale(1,1)");
+		.attr("transform", "translate(0,0)scale(1.000000001)"); // small difference needed because otherwise d3 would delete the scale string messing up all further animations
 	chart.transition()
 		.delay(500)
 		.duration(2000)
