@@ -67,9 +67,8 @@ p {
 }
 
 /* pie charts and graphs */
-
-/* misc */
-#back-btn {
+/* chart legend */
+.back-btn {
   font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 700;
   fill: #FFF;
@@ -77,9 +76,16 @@ p {
   cursor: pointer;
 }
 
-.legend {
+.legend text {
   font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
-  fill: #FFF;
+  fill: #7A7A7A;
   font-size: 0.8em;
+}
+
+#chart-handle text {
+  font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 700;
+  fill: #FFF;
+  font-size: 1em;
 }

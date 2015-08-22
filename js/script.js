@@ -27,6 +27,7 @@ var svg = d3.select("#map")
 	.attr("width", MAP_WIDTH)
 	.attr("height", MAP_HEIGHT);
 
+
 //--- map ---//
 var container = svg.append("g")
 		.attr("id", "map-handle")
@@ -70,50 +71,108 @@ countries.append("path")
 countries.append("text")
 	.attr("name", function(d) { return d.name; });
 
+
 //--- chart ---//
+var CHART_SIZE = Math.min(0.6*MAP_WIDTH, 0.6*MAP_HEIGHT),
+	radius = CHART_SIZE/2.2 - 20;
+
+var pie = d3.layout.pie()
+	.value(converter)  // function that extracts the value that define the pie chart
+	.padAngle(0.02);
+
+var arc = d3.svg.arc()
+	.innerRadius(radius/2)
+	.padRadius(radius); // use pad radius for correct scaling via animation
+
 var chart = svg.append("g")
 	.attr("id", "chart-handle")
 	.attr("transform", "translate(0," + MAP_HEIGHT + ")");
 
-var CHART_SIZE = Math.min(0.6*MAP_WIDTH, 0.6*MAP_HEIGHT);
-
-var chartLegend = chart.append("g")
-	.attr("class", "legend")
-	.attr("transform", "translate(20," + CHART_SIZE/2 + ")");
-
-chartLegend.append("rect")
-		.attr("width", 100)
-		.attr("height", CHART_SIZE)
-		.style("fill", "#0DD");
-
-chartLegend.append("text")
-	.attr("dx", "1.5em") // 1.5em due to ("Legend").length/4
-	.attr("y", "1em")
-	.text("Legend");
-
-// var legendEntries = chartLegend.selectAll("text")
-// 		.data(data)
-// 	.enter().append("text")
-// 	.attr("class", "legendEntry")
-// 	.attr("x", -("Text").length + "em")
-// 	.text("Text");
-
-// placeholder
-var pieChart = chart.append("g")
-	.attr("class", "pieChart")
-	.attr("transform", "translate(130," + CHART_SIZE/2 + ")") // has to be changed to center of this g for a pie chart
-	.append("rect")
-		.attr("width", CHART_SIZE)
-		.attr("height", CHART_SIZE)
-		.style("fill", "steelblue");
-
 // temporary back button until we found something better, maybe an image / icon
 var backBtn = chart.append("text")
-	.attr("id", "back-btn")
+	.attr("class", "back-btn")
 	.attr("x", 20)
 	.attr("y", 30)
 	.text("^ back")
 	.on("click", countryClickedOff);
+
+var chartData = [{name:"water", value:70}, 
+			{name:"air", value:128}, 
+			{name:"earth", value:16},
+			{name:"fire", value:32},
+			{name:"metal", value:64},
+			{name:"blood", value:42},
+			{name:"plant", value:8}];
+
+var pieChart = chart.append("g")
+	.attr("class", "pieChart")
+	.attr("transform", "translate(" + (130+CHART_SIZE/2) + "," + CHART_SIZE + ")");
+
+var chartText = pieChart.append("text")
+	.attr("class", "chart-text")
+	.attr("dx", -(chartData[0].value).toString().length/4 + "em") // centers the text indepentend of the world length
+	.attr("dy", "+0.5em") // vertical centering 
+	.text("");
+
+var sections = pieChart.selectAll(".section")
+		.data(pie(chartData)) // get the data from the pie chart layout created from our data
+	.enter().append("g")
+		.attr("class", "section");
+
+// mapping function which maps the given domain onto a range by a specified hsl interpolation method
+var colorScale = d3.scale.linear()
+	.domain([0, chartData.length])
+	.range(["hsl(-180,50%,50%)", "hsl(180,50%,50%)"])
+	.interpolate(interpolateHsl); // set interpolation function
+
+// add our arcs
+sections.append("path")
+	.each(function(d) { // add outer radius var to data for transitions
+		d.startA = d.startAngle;
+		d.endA = d.endAngle;
+		return d.outerRadius = radius;
+	})
+	.attr("d", arc) // arc as path attribute
+	.style("fill", function(d,i) { return colorScale(i); })
+	.on("mouseover", arcTweenOut)
+	.on("mouseout", arcTweenIn);
+
+
+//--- legend ---//
+var chartLegend = chart.append("g")
+	.attr("class", "legend")
+	.attr("transform", "translate(20," + CHART_SIZE/2 + ")");
+
+var btnLegend = chartLegend.append("text")
+	.attr("id", "btnLegend")
+	.attr("y", "1em")
+	.attr("cursor", "pointer")
+	.text("Legend")
+	.on("click", legendClicked);
+
+var legend = chartLegend.append("g")
+	.attr("class", "legend-entries")
+	.attr("transform", "translate(0,40)");
+
+var entries = legend.selectAll("g")
+		.data(chartData)
+	.enter().append("g")
+		.attr("transform", function(d,i) { return "translate(20," + i*20 +")"; });
+
+entries.append("text")
+	.attr("dx", 5)
+	.style("fill", "#7A7A7A")
+	.text(function(d)  { return d.name; })
+	.on("mouseover", entryHover)
+	.on("mouseout", entryOut);
+entries.append("rect")
+	.attr("x", -10)
+	.attr("y", -10)
+	.attr("width", 10)
+	.attr("height", 10)
+	.attr("rx", 2)
+	.attr("ry", 2)
+	.attr("fill", function(d,i) { return colorScale(i); });
 
 
 //--- functions ---//
@@ -223,6 +282,8 @@ function countryClickedOn() {
 		.attr("rx", 1)
 		.attr("ry", 1)
 		.style("fill", "#FFF");
+
+	sections.each(arcSpread);
 }
 
 function countryClickedOff() {
@@ -272,4 +333,177 @@ function countryClickedOff() {
 		.attr("rx", 0)
 		.attr("ry", 0)
 		.style("fill", "#BEF");
+
+	sections.each(arcVanish);
+}
+
+//--- chart and legend functions ---//
+function arcSpread(d) {
+	var end = d.endA;
+	d.startAngle = d.startA;
+	d.endAngle = d.startA;
+
+	var section = d3.select(this).select("path");
+	section.attr("d", arc(d));
+
+	section.transition()
+		.delay(2300)
+		.duration(2000)
+		.ease("elastic")
+		.attrTween("d", function(d) {
+	      		var i = d3.interpolate(d.endAngle, end);
+	      		return function(t) { d.endAngle = i(t); return arc(d); };
+	      	});
+}
+
+function arcVanish(d) {
+	var section = d3.select(this).select("path");
+
+	section.transition()
+		.duration(700)
+		.ease("linear")
+		.attrTween("d", function(d) {
+	      		var i = d3.interpolate(d.startAngle, 0),
+	      			j = d3.interpolate(d.endAngle, 0);
+	      		return function(t) { d.startAngle = i(t); d.endAngle = j(t); return arc(d); };
+	      	});
+}
+
+// arc in and arc out tween due to different color changes
+function arcTweenOut(d,i) {
+	chartText.text(d.data.value)
+		.attr("dx", -(d.data.value).toString().length/4 + "em");
+
+	var section = d3.select(this);
+
+	section.style("fill", function(d) { return colorScale(i).darker(2); })
+		.style("stroke", "#EEE")
+		.style("stroke-width", "2.5px");
+
+	section.transition()
+		.duration(500)
+		.ease("bounce", "in-out")
+		.attrTween("d", function(d) {
+      		var i = d3.interpolate(d.outerRadius, radius+20);
+      		return function(t) { d.outerRadius = i(t); return arc(d); };
+      	});
+
+    var entry = d3.select(entries[0][i]).select("text");
+
+    entry.transition()
+    	.duration(250)
+    	.style("fill", "#FFF");
+}
+
+function arcTweenIn(d,i) {
+	chartText.text("");
+
+	var section = d3.select(this);
+
+	section.style("fill", colorScale(i))
+		.style("stroke", "#333")
+		.style("stroke-width", "1.5px");
+
+	section.transition()
+		.delay(150)
+		.duration(500)
+		.ease("bounce", "in-out")
+		.attrTween("d", function(d) {
+      		var i = d3.interpolate(d.outerRadius, radius);
+      		return function(t) { d.outerRadius = i(t); return arc(d); };
+      	});
+
+    var entry = d3.select(entries[0][i]).select("text");
+
+    entry.transition()
+    	.duration(250)
+    	.style("fill", "#7A7A7A");
+}
+
+// special interpolation method for hsl values to avoiding shortest-path interpolation
+function interpolateHsl(a, b) {
+  var i = d3.interpolateString(a, b);
+  return function(t) {
+    return d3.hsl(i(t));
+  };
+}
+
+// pie chart converter so that the layout extracts the right values
+function converter(d) {
+	return +d.value; // force cast to number value, just in case
+}
+
+function legendClicked() {
+	var x = d3.transform(entries.attr("transform")).translate[0];
+
+	if(x <= 0) {
+		entries.each(function(d,i) {
+			var entry = d3.select(this);
+
+			entry.transition()
+				.delay(i*100)
+				.duration(500)
+				.ease("elastic")
+				.attr("transform", "translate(" + 20 + "," + d3.transform(entry.attr("transform")).translate[1] + ")");
+		});
+	} else {
+		entries.each(function(d,i) {
+			var entry = d3.select(this);
+
+			entry.transition()
+				.delay(i*100)
+				.duration(500)
+				.ease("elastic")
+				.attr("transform", "translate(" + -200 + "," + d3.transform(entry.attr("transform")).translate[1] + ")");
+		});
+	}
+}
+
+function entryHover(d,i) {
+	chartText.text(d.value)
+		.attr("dx", -(d.value).toString().length/4 + "em");
+
+	var section = d3.select(sections[0][i]).select("path");
+
+	section.style("fill", function(d) { return colorScale(i).darker(2); })
+		.style("stroke", "#EEE")
+		.style("stroke-width", "2.5px");
+
+	section.transition()
+		.duration(500)
+		.ease("bounce", "in-out")
+		.attrTween("d", function(d) {
+      		var i = d3.interpolate(d.outerRadius, radius+20);
+      		return function(t) { d.outerRadius = i(t); return arc(d); };
+      	});
+
+    var entry = d3.select(this);
+
+    entry.transition()
+    	.duration(250)
+    	.style("fill", "#FFF");
+}
+
+function entryOut(d,i) {
+	chartText.text("");
+
+	var section = d3.select(sections[0][i]).select("path");
+
+	section.style("fill", colorScale(i)) 
+		.style("stroke", "#333")
+		.style("stroke-width", "1.5px");
+
+	section.transition()
+		.duration(500)
+		.ease("bounce", "in-out")
+		.attrTween("d", function(d) {
+      		var i = d3.interpolate(d.outerRadius, radius);
+      		return function(t) { d.outerRadius = i(t); return arc(d); };
+      	});
+
+    var entry = d3.select(this);
+
+    entry.transition()
+    	.duration(250)
+    	.style("fill", "#7A7A7A");
 }
