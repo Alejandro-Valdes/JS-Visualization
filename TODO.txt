@@ -5,8 +5,10 @@
 1) Enhance paning and zooming on the map. Zoom to mouse pos
 
 2) Think of a good method to disable mouse over events while they animate
+	- Pie chart stops animation on mouseover
+	- World map stays in place if dragged or zoomed
 
-
+3) Background rect apply negative transition so there is always the background but also vanishes on click on a country
 
 
 //---------------------------------------------------------------------------------------------------------------------------//
