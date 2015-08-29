@@ -81,6 +81,7 @@ p {
   font-weight: 300;
   fill: #7A7A7A;
   font-size: 0.8em;
+  cursor: pointer;
 }
 
 #chart-handle text {
