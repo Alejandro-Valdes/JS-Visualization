@@ -3,14 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>See the world</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 	<div class="container">
 		<h2>See the world</h2>
-		<svg id="map">
-			<!-- D3 and Rapheal content -->
-		</svg>
+		<!-- D3 and Rapheal content -->
+		<div id="map">
+			<div class="row">
+				<div id="chart" class="col-md-6"></div>
+				<div id="barChart" class="col-md-6"></div>
+			</div>
+		</div>
 	</div>
 	<script src="js/raphael-min.js"></script>
 	<script type="text/javascript" src="js/d3.min.js"></script>
