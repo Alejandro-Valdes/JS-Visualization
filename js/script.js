@@ -1,6 +1,14 @@
 // TODO: Weird transition bug by click on a country. Only happens if you have not moved or zoomed
 // TODO: Enhance paning and zooming on the map. Zoom to mouse pos
+/*
+DATA VISUALIZATION WEB APP
+Clic on any country to learn about it
+Developed by
+Philipp Müller
+Jesus Alejandro Valdes
+*/
 
+//dimensions of the svg area
 var MAP_WIDTH  = 1200,
 	MAP_HEIGHT = 600;
 
@@ -37,6 +45,8 @@ var data = [{ name: "Andorra", code: "AD", path:"M480.49,331.38L480.41,331.4L480
 { name: "Belize", code: "BZ", path:"M227.9,410.25l-0.15,0.33l0.15,0.04l0.14,-0.03l0.33,0.01l0.13,0.37l-0.03,0.31l-0.31,0.81l-0.04,0.28l-0.14,0.41l0.19,0.27l-0.18,0.36l-0.06,0.23L227.9,414l0.09,0.67l-0.15,0.96l-0.26,0.42l-0.16,0.16l-0.28,0.42l-0.37,0.12l-0.52,0.67l-0.09,0.18l0.05,0.19l-0.12,0l-0.5,-0.03l-0.33,0.03l-0.01,-0.02l0.03,-0.72l0.04,-1.12l0.03,-0.82l0.03,-0.8l0.02,-0.6l0.03,-0.82l0.03,-0.71l0,-0.26l0.08,-0.2l0.23,-0.08l0.3,0.18l0.13,0.07l0.11,-0.04l0.14,-0.11l0.18,-0.31l0.44,-0.64l0.18,-0.46l0.17,-0.09l0.25,-0.02L227.9,410.25zM228.87,411.85l-0.13,0.05l0.11,-0.17l0.02,-0.11l0.15,-0.45l0.11,0l0.03,0.04L228.87,411.85zM229.14,413.32l-0.22,0.41l-0.01,-0.12l0.09,-0.3l0.12,-0.11l0.08,-0.11l0.02,-0.13l0.11,0.06l-0.03,0.13L229.14,413.32z"}
 ];
 
+
+//Canvas for our proyect
 var svg = d3.select("#map").append('svg')
 	.attr("width", MAP_WIDTH)
 	.attr("height", MAP_HEIGHT);
@@ -59,8 +69,10 @@ container.append("rect")
 	.style("fill", "#082935");
 	// .style("fill", "#222");
 
+//countries unique code
 var infoCode;
 
+//How we will show each country´s name
 var infoText = svg.append("g")
 	.attr("id", "info-text");
 
@@ -74,6 +86,8 @@ infoText.append("rect")
 	.attr("height", 1)
 	.style("fill", "#BEF");	
 
+
+//Itirating trough each country, binding them to the functions
 var countries = container.selectAll(".country")
 		.data(data)
 	.enter().append("g")
@@ -81,6 +95,8 @@ var countries = container.selectAll(".country")
 		.on("click", countryClickedOn)
 		.on("mouseover", countryHover)
 		.on("mouseout", countryOut);
+
+//binding data, path, country name, country
 
 countries.append("path")
 	.attr("d", function(d) { return d.path; });
@@ -128,6 +144,64 @@ var btnLegend;
 var legend;
 var entries;
 
+/**
+*
+*
+*
+BAR CHART
+*
+*
+*
+**/
+
+//variables and temporal data
+var dataBarChart = [40,50,10,30,21,12,38,123,124, 200, 150, 165, 180, 200, 220, 240, 270, 300];
+
+var margin = {top:30, right:10, bottom: 30, left:50};
+
+//the dimensions of the svg barchart
+var heightBar = 325 - margin.top - margin.bottom, 
+	widthBar = 500 - margin.left - margin.right;
+
+//width and offset of each bar
+var barWidth = 40;//, barOffset = 6;
+var eventColor;
+
+//scale along the y axis scale.linear to maximize space
+var yScale = d3.scale.linear()
+	.domain([0, d3.max(dataBarChart)])
+	.range([0,heightBar]);
+
+//scale along the x axis scale.ordinal to maximiza space
+var xScale = d3.scale.ordinal()
+	.domain(d3.range(0,dataBarChart.length))
+	.rangeBands([0,widthBar]);
+
+
+//append the bar chart handler to our svg
+var barChart = svg.append("g")
+	.attr("id","barChart-handle")
+	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + ")");
+
+//create each bar
+barChart.selectAll('rect').data(dataBarChart)
+  	.enter().append('rect')
+	    .style({'fill': '#1ABC9C', 'stroke': '#3498DB', 'stroke-width': '4'})
+	    .attr('width', xScale.rangeBand())
+	    .attr('height', 0) //important for the animation
+	    .attr('x', function(d,i){
+	    	return xScale(i);
+	    })
+	    .attr('y', heightBar)//animation
+	    .on('mouseover', function(d) {
+	    	eventColor = this.style.fill; //save it for later
+	    	d3.select(this)
+	    		.style('fill', '#E74C3C')
+	    })
+	    .on('mouseout', function(d) {
+	    	d3.select(this)
+	    		.style('fill', eventColor)
+	    });
 
 //--- functions ---//
 
@@ -214,6 +288,11 @@ function countryClickedOn() {
 		.duration(2000)
 		.attr("transform", "translate(0," + -MAP_HEIGHT + ")scale(1.001)");
 
+	barChart.transition()
+		.delay(600)
+		.duration(2000)
+		.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+","+225+")");
+
 	chart.transition()
 		.delay(600)
 		.duration(2000)
@@ -259,6 +338,7 @@ function countryClickedOn() {
 			console.log("Number of users in " + countryName + " " + data[1][0].value);
 			numUsers = data[1][0].value;
 			drawPie(numUsers);
+			drawBarChart();
 	    },
 	    error: function(e) {
 	       console.log(e.message);
@@ -315,9 +395,52 @@ function countryClickedOff() {
 		.style("fill", "#BEF");
 
 	sections.each(arcVanish);
+	barShrink();
 }
 
 //--- chart and legend functions ---//
+
+function drawBarChart(){
+	//more stuff will go here
+	barGrow()
+}
+
+function barGrow(){
+	//bar chart transition effect
+	barChart.selectAll('rect').transition()
+		.attr('height', function(d){
+			return yScale(d);
+		})
+		.attr('y', function(d){
+	    	return heightBar-yScale(d);
+	    })
+	    .delay(function(d,i) {
+	    	return i*100;
+	    })
+	    .duration(1500)
+}
+
+function barShrink(){
+
+	//bar chart transition effect
+	barChart.selectAll('rect').transition()
+		.attr('height', function(d){
+			return 0;
+		})
+		.attr('y', function(d){
+	    	return heightBar;
+	    })
+	    .delay(function(d,i) {
+	    	return i*10;
+	    })
+	    .duration(1000)
+    
+    //return the barchart outside of viewable area
+    barChart.transition()
+    	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + ")")
+    	.delay(1000)
+    	.duration(1000);
+}
 
 function drawPie(users) {
 	chartData = [{name:"Internet users", value:users}, 
@@ -366,8 +489,8 @@ function drawPie(users) {
 		.attr("id", "btnLegend")
 		.attr("y", "1em")
 		.attr("cursor", "pointer")
-		.text("Legend")
-		.on("click", legendClicked);
+		.text("Legend");
+		//.on("click", legendClicked);
 
 	legend = chartLegend.append("g")
 		.attr("class", "legend-entries")
@@ -491,7 +614,7 @@ function converter(d) {
 	return +d.value; // force cast to number value, just in case
 }
 
-function legendClicked() {
+/*function legendClicked() {
 	var x = d3.transform(entries.attr("transform")).translate[0];
 
 	if(x <= 0) {
@@ -515,7 +638,7 @@ function legendClicked() {
 				.attr("transform", "translate(" + -200 + "," + d3.transform(entry.attr("transform")).translate[1] + ")");
 		});
 	}
-}
+}*/
 
 function entryHover(d,i) {
 	chartText.text(d.value)
