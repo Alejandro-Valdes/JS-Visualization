@@ -153,17 +153,17 @@ var dataBarChart = [40,50,10,30,21,12,38,123,124, 200, 150, 165, 180, 200, 220, 
 var margin = {top:30, right:10, bottom: 30, left:50};
 
 // the dimensions of the svg barchart
-var heightBar = 325 - margin.top - margin.bottom, 
-	widthBar = 500 - margin.left - margin.right;
-
-//var eventColor;
+var heightBar = 325, 
+	widthBar = 500;
 
 // scale along the y axis scale.linear to maximize space
 var yScale = d3.scale.linear()
 	.domain([0, d3.max(dataBarChart)])
 	.range([0,heightBar]);
 
-// scale along the x axis scale.ordinal to maximiza space
+// scale along the x axis scale.ordinal to maximize space
+
+
 var xScale = d3.scale.ordinal()
 	.domain(d3.range(0,dataBarChart.length))
 	.rangeRoundBands([0,widthBar], 0.125);
@@ -172,12 +172,13 @@ var xScale = d3.scale.ordinal()
 // append the bar chart handler to our svg
 var barChart = svg.append("g")
 	.attr("id","barChart-handle")
+	.attr("width", widthBar)
+	.attr("height", heightBar)
 	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + ")");
 
 // create each bar
 barChart.selectAll('rect').data(dataBarChart)
   	.enter().append('rect')
-	    //.style({'fill': '#1ABC9C', 'stroke': '#3498DB', 'stroke-width': '4'})
 	    .style('fill', '#1ABC9C')
 	    .attr('width', xScale.rangeBand())
 	    .attr('height', 0) //important for the animation
@@ -188,18 +189,16 @@ barChart.selectAll('rect').data(dataBarChart)
 	    })
 	    .attr('y', heightBar)//animation
 	    .on('mouseover', function(d) {
-	    	//eventColor = this.style.fill; //save it for later
 	    	d3.select(this).transition()
-	    		.duration(800)
+	    		.duration(600)
 	    		.style('fill', '#E74C3C')
-	    		.attr("y", heightBar-yScale(d)-16)
-	    		.attr("height", yScale(d)+16);
+	    		.attr("y", heightBar-yScale(d))
+	    		.attr("height", yScale(d));
 	    })
 	    .on('mouseout', function(d) {
 	    	d3.select(this).transition()
 	    		.delay(200)
-	    		.duration(1200)
-	    		//.style('fill', eventColor)
+	    		.duration(1500)
 	    		.style("fill", "#1ABC9C")
 	    		.attr("y", heightBar-yScale(d))
 	    		.attr("height", yScale(d));
@@ -293,8 +292,7 @@ function countryClickedOn() {
 	barChart.transition()
 		.delay(600)
 		.duration(2000)
-		.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+","+225+")");
-
+		.attr("transform", "translate("+(MAP_WIDTH/2 + margin.left )+","+(150+ margin.top)+")");
 	chart.transition()
 		.delay(600)
 		.duration(2000)
@@ -419,6 +417,44 @@ function barGrow(){
 	    	return i*100;
 	    })
 	    .duration(1500)
+
+	var verticalLegendScale = d3.scale.linear()
+	.domain([0, d3.max(dataBarChart)])
+	.range([heightBar, 0]);
+
+	var yAxis = d3.svg.axis()
+		.scale(verticalLegendScale)
+		.orient('left')
+		.ticks(10);
+
+	var verticalLegend = barChart.append('g')
+		.call(yAxis);
+
+	verticalLegend.attr('transform',  'translate('+0+','+0+')');
+	verticalLegend.selectAll('path')
+	    .style({fill: 'none', stroke: "#fff"});
+	verticalLegend.selectAll('line')
+	    .style({stroke: "#fff"});
+	verticalLegend.selectAll('text')
+	    .style({stroke: "#fff"});
+
+	var xAxis = d3.svg.axis()
+		.scale(xScale) //previously defined
+		.orient('bottom')
+		.ticks(dataBarChart.size);
+	
+	var horizontalLegend = barChart.append('g')
+		.call(xAxis);
+
+	horizontalLegend.attr('transform', 'translate('+0+','+heightBar+')');
+	horizontalLegend.selectAll('path')
+	    .style({fill: 'none', stroke: "#fff"});
+	horizontalLegend.selectAll('line')
+	    .style({stroke: "#fff"});
+	horizontalLegend.selectAll('text')
+	    .style({stroke: "#fff"});
+
+	
 }
 
 function barShrink(){
@@ -438,9 +474,11 @@ function barShrink(){
     
     //return the barchart outside of viewable area
     barChart.transition()
-    	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + ")")
+    	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + 20 + ")")
     	.delay(1000)
     	.duration(1000);
+
+
 }
 
 function drawPie(users) {
