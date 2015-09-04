@@ -147,27 +147,14 @@ BAR CHART
 **/
 
 //variables and temporal data
-var dataBarChart = [40,50,10,30,21,12,38,123,124, 200, 150, 165, 180, 200, 220, 240, 270, 300];
+var dataBarChart = [];
 
 // margin needed due to the additional axis offsets
 var margin = {top:30, right:10, bottom: 30, left:50};
 
 // the dimensions of the svg barchart
-var heightBar = 325, 
+var heightBar = 350, 
 	widthBar = 500;
-
-// scale along the y axis scale.linear to maximize space
-var yScale = d3.scale.linear()
-	.domain([0, d3.max(dataBarChart)])
-	.range([0,heightBar]);
-
-// scale along the x axis scale.ordinal to maximize space
-
-
-var xScale = d3.scale.ordinal()
-	.domain(d3.range(0,dataBarChart.length))
-	.rangeRoundBands([0,widthBar], 0.125);
-
 
 // append the bar chart handler to our svg
 var barChart = svg.append("g")
@@ -176,34 +163,16 @@ var barChart = svg.append("g")
 	.attr("height", heightBar)
 	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + ")");
 
-// create each bar
-barChart.selectAll('rect').data(dataBarChart)
-  	.enter().append('rect')
-	    .style('fill', '#1ABC9C')
-	    .attr('width', xScale.rangeBand())
-	    .attr('height', 0) //important for the animation
-	    .attr("rx", 4)
-	    .attr("ry", 4)
-	    .attr('x', function(d,i){
-	    	return xScale(i);
-	    })
-	    .attr('y', heightBar)//animation
-	    .on('mouseover', function(d) {
-	    	d3.select(this).transition()
-	    		.duration(600)
-	    		.style('fill', '#E74C3C')
-	    		.attr("y", heightBar-yScale(d))
-	    		.attr("height", yScale(d));
-	    })
-	    .on('mouseout', function(d) {
-	    	d3.select(this).transition()
-	    		.delay(200)
-	    		.duration(1500)
-	    		.style("fill", "#1ABC9C")
-	    		.attr("y", heightBar-yScale(d))
-	    		.attr("height", yScale(d));
-	    });
 
+// scale along the y axis scale.linear to maximize space
+var yScale;
+// scale along the x axis scale.ordinal to maximize space
+var xScale;
+var verticalLegendScale;
+var yAxis;
+var verticalLegend = null;
+var xAxis;
+var horizontalLegend;
 
 //--- functions ---//
 
@@ -324,6 +293,9 @@ function countryClickedOn() {
 	// link to the json of number of Internet users
 	var apiIntUsr =  "http://api.worldbank.org/countries/"+ infoCode +"/indicators/IT.NET.USER.P2?per_page=100&date=2014:2014&format=jsonP&prefix=getdata&callback=?";	
 
+	//link to the json of GPI per Capita
+	var apiGPI = "http://api.worldbank.org/countries/"+ infoCode +"/indicators/NY.GNP.PCAP.CD?per_page=100&date=2000:2015&format=jsonP&prefix=getdata2&callback=?";
+
 	var numUsers = 0;
 
 	/* ajax api call with jquery (has to be in JSONP to avoid CORS),
@@ -335,9 +307,31 @@ function countryClickedOn() {
 	    jsonpCallback: 'getdata',
 	    success: function(data) {
 	    	var countryName = infoText.select("text").text();
-			console.log("Number of users in " + countryName + " " + data[1][0].value);
+			//console.log("Number of users in " + countryName + " " + data[1][0].value);
 			numUsers = data[1][0].value;
 			drawPie(numUsers);
+	    },
+	    error: function(e) {
+	       console.log(e.message);
+	    }
+	});	
+
+	$.ajax({
+	   type: 'GET',
+	    url: apiGPI,
+	    dataType: 'json',
+	    jsonpCallback: 'getdata2',
+	    success: function(data) {
+	    	var countryName = infoText.select("text").text();
+			for(var i=0; i<15; i++){
+				if(data[1][i].value != "undefined"){
+					dataBarChart.push(data[1][i].value);
+					console.log(data[1][i].value);
+				}
+				else
+					break;
+			}
+			dataBarChart.reverse();
 			drawBarChart();
 	    },
 	    error: function(e) {
@@ -405,6 +399,46 @@ function drawBarChart(){
 }
 
 function barGrow(){
+
+	// scale along the y axis scale.linear to maximize space
+	yScale = d3.scale.linear()
+	.domain([0, d3.max(dataBarChart)])
+	.range([0,heightBar]);
+
+	// scale along the x axis scale.ordinal to maximize space
+	xScale = d3.scale.ordinal()
+	.domain(d3.range(0,dataBarChart.length))
+	.rangeRoundBands([0,widthBar], 0.125);
+
+
+	// create each bar
+	barChart.selectAll('rect').data(dataBarChart)
+	  	.enter().append('rect')
+		    .style('fill', '#1ABC9C')
+		    .attr('width', xScale.rangeBand())
+		    .attr('height', 0) //important for the animation
+		    .attr("rx", 4)
+		    .attr("ry", 4)
+		    .attr('x', function(d,i){
+		    	return xScale(i);
+		    })
+		    .attr('y', heightBar)//animation
+		    .on('mouseover', function(d) {
+		    	d3.select(this).transition()
+		    		.duration(600)
+		    		.style('fill', '#E74C3C')
+		    		.attr("y", heightBar-yScale(d))
+		    		.attr("height", yScale(d));
+		    })
+		    .on('mouseout', function(d) {
+		    	d3.select(this).transition()
+		    		.delay(200)
+		    		.duration(1500)
+		    		.style("fill", "#1ABC9C")
+		    		.attr("y", heightBar-yScale(d))
+		    		.attr("height", yScale(d));
+		    });
+
 	//bar chart transition effect
 	barChart.selectAll('rect').transition()
 		.attr('height', function(d){
@@ -417,17 +451,18 @@ function barGrow(){
 	    	return i*100;
 	    })
 	    .duration(1500)
-
-	var verticalLegendScale = d3.scale.linear()
+	
+	verticalLegendScale = d3.scale.linear()
 	.domain([0, d3.max(dataBarChart)])
 	.range([heightBar, 0]);
 
-	var yAxis = d3.svg.axis()
+	yAxis = d3.svg.axis()
 		.scale(verticalLegendScale)
 		.orient('left')
-		.ticks(10);
+		.ticks(15, "$");
 
-	var verticalLegend = barChart.append('g')
+	verticalLegend = barChart.append('g')
+		.attr("class","y axis")
 		.call(yAxis);
 
 	verticalLegend.attr('transform',  'translate('+0+','+0+')');
@@ -437,13 +472,15 @@ function barGrow(){
 	    .style({stroke: "#fff"});
 	verticalLegend.selectAll('text')
 	    .style({stroke: "#fff"});
+	
 
-	var xAxis = d3.svg.axis()
+	xAxis = d3.svg.axis()
 		.scale(xScale) //previously defined
 		.orient('bottom')
 		.ticks(dataBarChart.size);
 	
-	var horizontalLegend = barChart.append('g')
+	horizontalLegend = barChart.append('g')
+		.attr("class","x axis")
 		.call(xAxis);
 
 	horizontalLegend.attr('transform', 'translate('+0+','+heightBar+')');
@@ -477,6 +514,25 @@ function barShrink(){
     	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + 20 + ")")
     	.delay(1000)
     	.duration(1000);
+
+    dataBarChart=[];
+
+
+    verticalLegendScale = d3.scale.linear()
+	.domain([0, 0])
+	.range([heightBar, 0]);
+
+	yAxis = d3.svg.axis()
+		.scale(verticalLegendScale)
+		.orient('left')
+		.ticks(0);
+
+	barChart.selectAll('g.y.axis').transition()
+		.delay(2500)
+		.duration(1000)
+		.call(yAxis);
+
+    
 
 
 }
