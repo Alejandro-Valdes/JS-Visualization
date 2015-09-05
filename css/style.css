@@ -90,3 +90,7 @@ p {
   fill: #FFF;
   font-size: 1em;
 }
+
+.noMouse {
+  pointer-events: none;
+}

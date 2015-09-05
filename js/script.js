@@ -102,6 +102,10 @@ countries.append("code")
 
 
 //--- chart ---//
+var chart = svg.append("g")
+	.attr("id", "chart-handle")
+	.attr("transform", "translate(0," + MAP_HEIGHT + ")");
+
 var CHART_SIZE = Math.min(0.6*MAP_WIDTH, 0.6*MAP_HEIGHT),
 	radius = CHART_SIZE/2.2 - 20;
 
@@ -112,10 +116,6 @@ var pie = d3.layout.pie()
 var arc = d3.svg.arc()
 	.innerRadius(radius/2)
 	.padRadius(radius); // use pad radius for correct scaling via animation
-
-var chart = svg.append("g")
-	.attr("id", "chart-handle")
-	.attr("transform", "translate(0," + MAP_HEIGHT + ")");
 
 // temporary back button until we found something better, maybe an image / icon
 var backBtn = chart.append("text")
@@ -157,11 +157,11 @@ var heightBar = 350,
 	widthBar = 500;
 
 // append the bar chart handler to our svg
-var barChart = svg.append("g")
+var barChart = chart.append("g")
 	.attr("id","barChart-handle")
 	.attr("width", widthBar)
 	.attr("height", heightBar)
-	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + ")");
+	.attr("transform", "translate(" + (MAP_WIDTH/2+margin.left) +"," + (150+margin.top) + ")");
 
 
 // scale along the y axis scale.linear to maximize space
@@ -229,12 +229,10 @@ function countryOut() {
 }
 
 function countryClickedOn() {
+	d3.select("#map").attr("class", "noMouse");
+
 	// map styles and function pointer
 	var country = d3.select(this);
-
-	countries.on("click", 0)
-		.on("mouseover", 0)
-		.on("mouseout", 0);
 
 	country.attr("class", "selectedCountry")
 		.style("fill", "steelblue");
@@ -258,10 +256,6 @@ function countryClickedOn() {
 		.duration(2000)
 		.attr("transform", "translate(0," + -MAP_HEIGHT + ")scale(1.001)");
 
-	barChart.transition()
-		.delay(600)
-		.duration(2000)
-		.attr("transform", "translate("+(MAP_WIDTH/2 + margin.left )+","+(150+ margin.top)+")");
 	chart.transition()
 		.delay(600)
 		.duration(2000)
@@ -323,10 +317,10 @@ function countryClickedOn() {
 	    jsonpCallback: 'getdata2',
 	    success: function(data) {
 	    	var countryName = infoText.select("text").text();
-			for(var i=0; i<15; i++){
+			for(var i=0; i<15; i++) {
 				if(data[1][i].value != "undefined"){
-					dataBarChart.push(data[1][i].value);
-					console.log(data[1][i].value);
+					dataBarChart.push(+data[1][i].value);
+					//console.log(data[1][i].value);
 				}
 				else
 					break;
@@ -337,10 +331,16 @@ function countryClickedOn() {
 	    error: function(e) {
 	       console.log(e.message);
 	    }
-	});	
+	});
+
+	d3.select("#map").transition()
+		.delay(4400) // arcSpread and barGrowth time must be considered
+		.attr("class", "");
 }
 
 function countryClickedOff() {
+	d3.select("#map").attr("class", "noMouse");
+
 	// map styles and function pointer
 	container.transition()
 		.delay(500)
@@ -357,9 +357,6 @@ function countryClickedOff() {
 
 	// map and chart shift
 	countries = d3.selectAll(".country")
-	countries.on("click", countryClickedOn)
-		.on("mouseover", countryHover)
-		.on("mouseout", countryOut);
 	countries.transition()
 		.delay(2400)
 		.duration(500)
@@ -390,57 +387,77 @@ function countryClickedOff() {
 
 	sections.each(arcVanish);
 	barShrink();
+
+	d3.select("#map").transition()
+		.delay(2900)	// arcVanish and barShrink time must be considered
+		.attr("class", ""); 
 }
 
 //--- chart and legend functions ---//
-function drawBarChart(){
+function drawBarChart() {
 	// more stuff will go here
-	barGrow()
+	barGrow();
 }
 
-function barGrow(){
-
+function barGrow() {
 	// scale along the y axis scale.linear to maximize space
 	yScale = d3.scale.linear()
-	.domain([0, d3.max(dataBarChart)])
-	.range([0,heightBar]);
+		.domain([0, d3.max(dataBarChart)])
+		.range([0, heightBar]);
 
 	// scale along the x axis scale.ordinal to maximize space
 	xScale = d3.scale.ordinal()
-	.domain(d3.range(0,dataBarChart.length))
-	.rangeRoundBands([0,widthBar], 0.125);
-
+		.domain(d3.range(0,dataBarChart.length))
+		.rangeRoundBands([0,widthBar], 0.125);
 
 	// create each bar
-	barChart.selectAll('rect').data(dataBarChart)
-	  	.enter().append('rect')
-		    .style('fill', '#1ABC9C')
+	var bars = barChart.selectAll('g')
+			.data(dataBarChart)
+	  	.enter().append('g')
+	  		.attr("class", "bar")
+	  		.on('mouseover', function(d) {
+		    	d3.select(this).select("rect").transition()
+		    		.duration(600)
+		    		.style('fill', '#E74C3C');
+
+	    		d3.select(this).select("text").transition()
+	    			.duration(600)
+	    			.style("fill-opacity", 1);
+		    })
+		    .on('mouseout', function(d) {
+		    	d3.select(this).select("rect").transition()
+		    		.duration(800)
+		    		.style("fill", "#1ABC9C");
+		    	
+		    	d3.select(this).select("text").transition()
+		    		.duration(800)
+		    		.style("fill-opacity", 0);
+		    });
+
+	bars.append("rect")
+			.style('fill', '#1ABC9C')
 		    .attr('width', xScale.rangeBand())
 		    .attr('height', 0) //important for the animation
-		    .attr("rx", 4)
-		    .attr("ry", 4)
+		    .attr('rx', 4)
+		    .attr('ry', 4)
 		    .attr('x', function(d,i){
 		    	return xScale(i);
 		    })
-		    .attr('y', heightBar)//animation
-		    .on('mouseover', function(d) {
-		    	d3.select(this).transition()
-		    		.duration(600)
-		    		.style('fill', '#E74C3C')
-		    		.attr("y", heightBar-yScale(d))
-		    		.attr("height", yScale(d));
-		    })
-		    .on('mouseout', function(d) {
-		    	d3.select(this).transition()
-		    		.delay(200)
-		    		.duration(1500)
-		    		.style("fill", "#1ABC9C")
-		    		.attr("y", heightBar-yScale(d))
-		    		.attr("height", yScale(d));
-		    });
+		    .attr('y', heightBar);//animation
+
+	bars.append("text")
+		.attr("transform", "rotate(-90)") // switches x and y axis
+		.attr("x", function(d) { return -(heightBar-0.5*yScale(d)); })
+		.attr("dx", function(d) { return -(d+"").length/4 + "em"; })
+		.attr("y", function(d,i) { return xScale(i)+0.5*xScale.rangeBand(); })
+		.attr("dy", "0.375em")
+		.text(function(d) { return d+""; })
+		.style("fill", "#fff")
+		.style("fill-opacity", 0)
+		.style("pointer-events", "none");
 
 	//bar chart transition effect
-	barChart.selectAll('rect').transition()
+	bars.select('rect').transition()
 		.attr('height', function(d){
 			return yScale(d);
 		})
@@ -453,8 +470,8 @@ function barGrow(){
 	    .duration(1500)
 	
 	verticalLegendScale = d3.scale.linear()
-	.domain([0, d3.max(dataBarChart)])
-	.range([heightBar, 0]);
+		.domain([0, d3.max(dataBarChart)])
+		.range([heightBar, 0]);
 
 	yAxis = d3.svg.axis()
 		.scale(verticalLegendScale)
@@ -465,7 +482,7 @@ function barGrow(){
 		.attr("class","y axis")
 		.call(yAxis);
 
-	verticalLegend.attr('transform',  'translate('+0+','+0+')');
+	verticalLegend.attr('transform',  'translate(0,0)');
 	verticalLegend.selectAll('path')
 	    .style({fill: 'none', stroke: "#fff"});
 	verticalLegend.selectAll('line')
@@ -490,12 +507,9 @@ function barGrow(){
 	    .style({stroke: "#fff"});
 	horizontalLegend.selectAll('text')
 	    .style({stroke: "#fff"});
-
-	
 }
 
 function barShrink(){
-
 	//bar chart transition effect
 	barChart.selectAll('rect').transition()
 		.attr('height', function(d){
@@ -507,20 +521,19 @@ function barShrink(){
 	    .delay(function(d,i) {
 	    	return i*10;
 	    })
-	    .duration(1000)
+	    .duration(1000);
     
     //return the barchart outside of viewable area
-    barChart.transition()
-    	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + 20 + ")")
-    	.delay(1000)
-    	.duration(1000);
+    // barChart.transition()
+    // 	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + 20 + ")")
+    // 	.delay(1000)
+    // 	.duration(1000);
 
     dataBarChart=[];
 
-
     verticalLegendScale = d3.scale.linear()
-	.domain([0, 0])
-	.range([heightBar, 0]);
+		.domain([0, 0])
+		.range([heightBar, 0]);
 
 	yAxis = d3.svg.axis()
 		.scale(verticalLegendScale)
@@ -531,10 +544,6 @@ function barShrink(){
 		.delay(2500)
 		.duration(1000)
 		.call(yAxis);
-
-    
-
-
 }
 
 function drawPie(users) {
@@ -555,6 +564,8 @@ function drawPie(users) {
 			.data(pie(chartData)) // get the data from the pie chart layout created from our data
 		.enter().append("g")
 			.attr("class", "section");
+
+	//sections.exit().remove();
 
 	// mapping function which maps the given domain onto a range by a specified hsl interpolation method
 	colorScale = d3.scale.linear()
@@ -594,6 +605,8 @@ function drawPie(users) {
 			.data(chartData)
 		.enter().append("g")
 			.attr("transform", function(d,i) { return "translate(20," + i*20 +")"; });
+
+	//entries.exit().remove();
 
 	entries.append("text")
 		.attr("dx", 5)
