@@ -125,23 +125,42 @@ var backBtn = chart.append("text")
 	.text("^ back")
 	.on("click", countryClickedOff);
 
+var pieChart = chart.append("g")
+	.attr("class", "pieChart")
+	.attr("transform", "translate(" + (180+CHART_SIZE/2) + "," + CHART_SIZE + ")");
+
+var chartText = pieChart.append("text")
+	.attr("class", "chart-text")
+	//.attr("dx", -(chartData[0].value).toString().length/4 + "em") // centers the text indepentend of the world length
+	.attr("dx", -("").length/4 + "em") // centers the text indepentend of the world length
+	.attr("dy", "+0.5em") // vertical centering 
+	.text("");
+
+var chartLegend = chart.append("g")
+		.attr("class", "legend")
+		.attr("transform", "translate(20," + CHART_SIZE/2 + ")");
+
+var	btnLegend = chartLegend.append("text")
+		.attr("id", "btnLegend")
+		.attr("y", "1em")
+		.attr("cursor", "pointer")
+		.text("Legend");
+		//.on("click", legendClicked);
+
+var	legend = chartLegend.append("g")
+		.attr("class", "legend-entries")
+		.attr("transform", "translate(0,40)");
+
 // Global variables... Not sure if this is the best way
 var chartData;
-var pieChart;
-var chartText;
 var sections;
 var colorScale;
-var chartLegend;
-var btnLegend;
-var legend;
 var entries;
 
 /**
 *
 *
-*
 BAR CHART
-*
 *
 *
 **/
@@ -150,7 +169,7 @@ BAR CHART
 var dataBarChart = [];
 
 // margin needed due to the additional axis offsets
-var margin = {top:30, right:10, bottom: 30, left:50};
+var margin = {top:30, right:10, bottom: 30, left:80};
 
 // the dimensions of the svg barchart
 var heightBar = 350, 
@@ -163,7 +182,6 @@ var barChart = chart.append("g")
 	.attr("height", heightBar)
 	.attr("transform", "translate(" + (MAP_WIDTH/2+margin.left) +"," + (150+margin.top) + ")");
 
-
 // scale along the y axis scale.linear to maximize space
 var yScale;
 // scale along the x axis scale.ordinal to maximize space
@@ -174,7 +192,8 @@ var verticalLegend = null;
 var xAxis;
 var horizontalLegend;
 
-//--- functions ---//
+
+//--------------------------- FUNCTIONS ---------------------------//
 
 //--- navigation functions ---//
 function zoomed() {
@@ -207,7 +226,6 @@ function countryHover() {
 		.duration(500)
 		.style("fill", "steelblue");	
 		//stroke causes lag
-		
 }
 
 function countryOut() {
@@ -249,12 +267,12 @@ function countryClickedOn() {
 	// map and chart shift
 	container.transition()
 		.duration(600)
-		.attr("transform", "translate(0,0.001)scale(1.001)");
+		.attr("transform", "translate(0,0.001)scale(1.001)"); // small offsets necessary
 
 	container.transition()
 		.delay(600)
 		.duration(2000)
-		.attr("transform", "translate(0," + -MAP_HEIGHT + ")scale(1.001)");
+		.attr("transform", "translate(0," + -MAP_HEIGHT + ")scale(1.001)"); // small offsets necessary
 
 	chart.transition()
 		.delay(600)
@@ -335,7 +353,7 @@ function countryClickedOn() {
 
 	d3.select("#map").transition()
 		.delay(4400) // arcSpread and barGrowth time must be considered
-		.attr("class", "");
+		.attr("class", ""); // enable mouse interaction again
 }
 
 function countryClickedOff() {
@@ -410,31 +428,51 @@ function barGrow() {
 		.domain(d3.range(0,dataBarChart.length))
 		.rangeRoundBands([0,widthBar], 0.125);
 
-	// create each bar
-	var bars = barChart.selectAll('g')
-			.data(dataBarChart)
-	  	.enter().append('g')
-	  		.attr("class", "bar")
-	  		.on('mouseover', function(d) {
-		    	d3.select(this).select("rect").transition()
-		    		.duration(600)
-		    		.style('fill', '#E74C3C');
 
-	    		d3.select(this).select("text").transition()
-	    			.duration(600)
-	    			.style("fill-opacity", 1);
-		    })
-		    .on('mouseout', function(d) {
-		    	d3.select(this).select("rect").transition()
-		    		.duration(800)
-		    		.style("fill", "#1ABC9C");
-		    	
-		    	d3.select(this).select("text").transition()
-		    		.duration(800)
-		    		.style("fill-opacity", 0);
-		    });
+	// UPDATE //
+	var selection = barChart.selectAll('g').data(dataBarChart);
 
-	bars.append("rect")
+	// bar chart update effects
+	selection.select("text")
+		.attr("x", function(d) { return -(heightBar-0.5*yScale(d)); })
+		.attr("dx", function(d) { return -(d+"").length/4 + "em"; })
+		.attr("y", function(d,i) { return xScale(i)+0.5*xScale.rangeBand(); });
+
+	selection.select('rect').transition()
+		.attr('height', function(d){
+			return yScale(d);
+		})
+		.attr('y', function(d){
+	    	return heightBar-yScale(d);
+	    })
+	    .delay(function(d,i) {
+	    	return i*100;
+	    })
+	    .duration(1500);
+
+	// ENTER //
+	var enterBars =	selection.enter().append('g')
+  		.attr("class", "bar")
+  		.on('mouseover', function(d) {
+	    	d3.select(this).select("rect").transition()
+	    		.duration(600)
+	    		.style('fill', '#E74C3C');
+
+    		d3.select(this).select("text").transition()
+    			.duration(600)
+    			.style("fill-opacity", 1);
+	    })
+	    .on('mouseout', function(d) {
+	    	d3.select(this).select("rect").transition()
+	    		.duration(800)
+	    		.style("fill", "#1ABC9C");
+	    	
+	    	d3.select(this).select("text").transition()
+	    		.duration(800)
+	    		.style("fill-opacity", 0);
+	    });
+
+	enterBars.append("rect")
 			.style('fill', '#1ABC9C')
 		    .attr('width', xScale.rangeBand())
 		    .attr('height', 0) //important for the animation
@@ -445,7 +483,7 @@ function barGrow() {
 		    })
 		    .attr('y', heightBar);//animation
 
-	bars.append("text")
+	enterBars.append("text")
 		.attr("transform", "rotate(-90)") // switches x and y axis
 		.attr("x", function(d) { return -(heightBar-0.5*yScale(d)); })
 		.attr("dx", function(d) { return -(d+"").length/4 + "em"; })
@@ -456,8 +494,8 @@ function barGrow() {
 		.style("fill-opacity", 0)
 		.style("pointer-events", "none");
 
-	//bar chart transition effect
-	bars.select('rect').transition()
+	// enter bar chart transition effects
+	enterBars.select('rect').transition()
 		.attr('height', function(d){
 			return yScale(d);
 		})
@@ -467,11 +505,16 @@ function barGrow() {
 	    .delay(function(d,i) {
 	    	return i*100;
 	    })
-	    .duration(1500)
+	    .duration(1500);
+
+	// EXIT //
+	selection.exit().remove();
 	
+
 	verticalLegendScale = d3.scale.linear()
 		.domain([0, d3.max(dataBarChart)])
 		.range([heightBar, 0]);
+
 
 	yAxis = d3.svg.axis()
 		.scale(verticalLegendScale)
@@ -523,12 +566,6 @@ function barShrink(){
 	    })
 	    .duration(1000);
     
-    //return the barchart outside of viewable area
-    // barChart.transition()
-    // 	.attr("transform", "translate("+(MAP_WIDTH/2 + 100)+"," + MAP_HEIGHT + 20 + ")")
-    // 	.delay(1000)
-    // 	.duration(1000);
-
     dataBarChart=[];
 
     verticalLegendScale = d3.scale.linear()
@@ -550,31 +587,30 @@ function drawPie(users) {
 	chartData = [{name:"Internet users", value:users}, 
 			{name:"Non internet users", value:(100 - users).toFixed(2)}];
 
-	pieChart = chart.append("g")
-		.attr("class", "pieChart")
-		.attr("transform", "translate(" + (130+CHART_SIZE/2) + "," + CHART_SIZE + ")");
-
-	chartText = pieChart.append("text")
-		.attr("class", "chart-text")
-		.attr("dx", -(chartData[0].value).toString().length/4 + "em") // centers the text indepentend of the world length
-		.attr("dy", "+0.5em") // vertical centering 
-		.text("");
-
-	sections = pieChart.selectAll(".section")
-			.data(pie(chartData)) // get the data from the pie chart layout created from our data
-		.enter().append("g")
-			.attr("class", "section");
-
-	//sections.exit().remove();
-
 	// mapping function which maps the given domain onto a range by a specified hsl interpolation method
 	colorScale = d3.scale.linear()
 		.domain([0, chartData.length])
 		.range(["hsl(-180,50%,50%)", "hsl(180,50%,50%)"])
 		.interpolate(interpolateHsl); // set interpolation function
 
+	// UPDATE //
+	var updatePie = pieChart.selectAll(".section").data(pie(chartData));
+
+	// update arcs
+	updatePie.select("path")
+		.each(function(d) { // change outer radius var to data for transitions
+			d.startA = d.startAngle;
+			d.endA = d.endAngle;
+			return d.outerRadius = radius;
+		})
+		.attr("d", arc); // arc as path attribute
+	
+	// ENTER //
+	var enterPie = updatePie.enter().append("g")
+		.attr("class", "section");
+
 	// add our arcs
-	sections.append("path")
+	enterPie.append("path")
 		.each(function(d) { // add outer radius var to data for transitions
 			d.startA = d.startAngle;
 			d.endA = d.endAngle;
@@ -585,36 +621,25 @@ function drawPie(users) {
 		.on("mouseover", arcTweenOut)
 		.on("mouseout", arcTweenIn);
 
+	// EXIT //
+	var exitPie = updatePie.exit().remove();
+
 	//--- legend ---//
-	chartLegend = chart.append("g")
-		.attr("class", "legend")
-		.attr("transform", "translate(20," + CHART_SIZE/2 + ")");
+	// UDPATE //
+	var updateEntries = legend.selectAll("g").data(chartData);
+		
+	// ENTER //
+	var enterEntries = updateEntries.enter().append("g")
+		.attr("transform", function(d,i) { return "translate(20," + i*20 +")"; });
 
-	btnLegend = chartLegend.append("text")
-		.attr("id", "btnLegend")
-		.attr("y", "1em")
-		.attr("cursor", "pointer")
-		.text("Legend");
-		//.on("click", legendClicked);
-
-	legend = chartLegend.append("g")
-		.attr("class", "legend-entries")
-		.attr("transform", "translate(0,40)");
-
-	entries = legend.selectAll("g")
-			.data(chartData)
-		.enter().append("g")
-			.attr("transform", function(d,i) { return "translate(20," + i*20 +")"; });
-
-	//entries.exit().remove();
-
-	entries.append("text")
+	// enter entries effects
+	enterEntries.append("text")
 		.attr("dx", 5)
 		.style("fill", "#7A7A7A")
 		.text(function(d)  { return d.name; })
 		.on("mouseover", entryHover)
 		.on("mouseout", entryOut);
-	entries.append("rect")
+	enterEntries.append("rect")
 		.attr("x", -10)
 		.attr("y", -10)
 		.attr("width", 10)
@@ -623,6 +648,11 @@ function drawPie(users) {
 		.attr("ry", 2)
 		.attr("fill", function(d,i) { return colorScale(i); });
 
+	// EXIT //
+	updateEntries.exit().remove();
+
+	entries = updateEntries;
+	sections = updatePie;
 	sections.each(arcSpread);
 }
 
