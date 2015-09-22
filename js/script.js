@@ -99,7 +99,7 @@ countries.append("code")
 	.attr("code", function(d) { return d.code; });
 
 
-//--- chart ---//
+//--- charts area---//
 var chart = svg.append("g")
 	.attr("id", "chart-handle")
 	.attr("transform", "translate(0," + MAP_HEIGHT + ")");
@@ -152,9 +152,10 @@ var	btnLegend = chartLegend.append("text")
 		.attr("id", "btnLegend")
 		.attr("y", "1em")
 		.attr("cursor", "pointer")
-		.text("Legend");
+		.text("Internet Users (per 100 people)");
 		//.on("click", legendClicked);
 
+//legend items (users/non users)
 var	legend = chartLegend.append("g")
 		.attr("class", "legend-entries")
 		.attr("transform", "translate(0,40)");
@@ -182,6 +183,16 @@ var margin = {top:30, right:10, bottom: 30, left:80};
 // the dimensions of the svg barchart
 var heightBar = 350, 
 	widthBar = 500;
+
+//bar chart title
+var chartTitle = chart.append("g")
+	.attr("class", "legend")
+	.attr("transform", "translate("+ (MAP_WIDTH/2 + margin.left + widthBar/6)  + ",130 )");
+
+var barTitle = chartTitle.append("text")
+	.attr("id", "barTitle")
+	.attr("y", "1em")
+	.text("Average yearly income per capita");
 
 // append the bar chart handler to our svg
 var barChart = chart.append("g")
@@ -303,25 +314,6 @@ function countryClickedOn() {
 		.delay(2000)
 		.style("fill", "#ddd");
 
-	// title 
-	infoText.transition()
-		.delay(800)
-		.duration(1000)
-		.attr("transform", "translate(" + MAP_WIDTH/2 + ",0)");
-	infoText.select("text").transition()
-		.duration(1000)
-		.attr("x", -infoText.select("text").text().length/4 + "em")
-		.style("fill", "#FFF");
-	infoText.select("rect").transition()
-		.delay(800)
-		.duration(1000)
-		.attr("x", -infoText.select("text").text().length/2 + "em")
-		.attr("width", infoText.select("text").text().length + "em")
-		.attr("height", 4)
-		.attr("rx", 1)
-		.attr("ry", 1)
-		.style("fill", "#FFF");
-
 	// link to the json of number of Internet users
 	var apiIntUsr =  "http://api.worldbank.org/countries/"+ infoCode +"/indicators/IT.NET.USER.P2?per_page=100&date=2014:2014&format=jsonP&prefix=getdata&callback=?";	
 
@@ -341,6 +333,9 @@ function countryClickedOn() {
 	    	var countryName = infoText.select("text").text();
 			numUsers = data[1][0].value; //Gets value of json
 			drawPie(numUsers); //Draws pie chart
+
+			//Problems drawing the country name call a function
+			showCountryName();
 	    },
 	    error: function(e) {
 	       console.log(e.message);
@@ -373,6 +368,30 @@ function countryClickedOn() {
 	d3.select("#map").transition()
 		.delay(4400) // arcSpread and barGrowth time must be considered
 		.attr("class", ""); // enable mouse interaction again
+}
+
+//Had trouble showing the selected country name so made a function that gets called after from ajax req
+function showCountryName(){
+	// title 
+	infoText.transition()
+		.delay(800)
+		.duration(1000)
+		.attr("transform", "translate(" + MAP_WIDTH/2 + ",0)");
+	infoText.select("text").transition()
+		.duration(1000)
+		.attr("x", -infoText.select("text").text().length/4 + "em")
+		.style("fill-opacity", 1)
+		.style("fill", "#FFF");
+	infoText.select("rect").transition()
+		.delay(800)
+		.duration(1000)
+		.attr("x", -infoText.select("text").text().length/2 + "em")
+		.attr("width", infoText.select("text").text().length + "em")
+		.attr("height", 4)
+		.attr("rx", 1)
+		.attr("ry", 1)
+		.style("fill-opacity", 1)
+		.style("fill", "#FFF");
 }
 
 function countryClickedOff() {
@@ -611,8 +630,8 @@ function barShrink(){
 
 function drawPie(users) {
 	//Array with the data of internet and non usets
-	chartData = [{name:"Internet users", value:users}, 
-			{name:"Non internet users", value:(100 - users).toFixed(2)}];
+	chartData = [{name:"Users", value:users}, 
+			{name:"Non Users", value:(100 - users).toFixed(2)}];
 
 	// mapping function which maps the given domain onto a range by a specified hsl interpolation method
 	colorScale = d3.scale.linear()
