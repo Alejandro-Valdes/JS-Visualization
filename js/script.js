@@ -117,7 +117,7 @@ var arc = d3.svg.arc()
 
 // temporary back button until we found something better, maybe an image / icon
 var backBtn = chart.append("text")
-	.attr("class", "back-btn")
+	.attr("id", "back-btn")
 	.attr("x", 20)
 	.attr("y", 30)
 	.text("^ back")
@@ -192,7 +192,7 @@ var chartTitle = chart.append("g")
 var barTitle = chartTitle.append("text")
 	.attr("id", "barTitle")
 	.attr("y", "1em")
-	.text("Average yearly income per capita");
+	.text("Average yearly per capita income");
 
 // append the bar chart handler to our svg
 var barChart = chart.append("g")
@@ -277,6 +277,7 @@ function countryOut() {
 
 //On Country clicked on it rises the map and shows both graphs.
 function countryClickedOn() {
+	// disable mouse interaction for duration of animations
 	d3.select("#map").attr("class", "noMouse");
 
 	// map styles and function pointer
@@ -365,9 +366,10 @@ function countryClickedOn() {
 	    }
 	});
 
+	// enable mouse interaction again after all animations are finished
 	d3.select("#map").transition()
 		.delay(4400) // arcSpread and barGrowth time must be considered
-		.attr("class", ""); // enable mouse interaction again
+		.attr("class", ""); 
 }
 
 //Had trouble showing the selected country name so made a function that gets called after from ajax req
@@ -394,6 +396,7 @@ function showCountryName(){
 		.style("fill", "#FFF");
 }
 
+// the country was deselected, in our case back button was clicked
 function countryClickedOff() {
 	d3.select("#map").attr("class", "noMouse");
 
@@ -430,7 +433,6 @@ function countryClickedOff() {
 		.duration(1500)
 		.attr("x", 50)
 		.style("fill", "#BEF");
-		// .style("font-weight", 300);
 	infoText.select("rect").transition()
 		.delay(800)
 		.duration(1500)
@@ -628,6 +630,8 @@ function barShrink(){
 		.call(yAxis);
 }
 
+// called in function countryClickedOn()
+// creates or update the pie chart with the data by the selected country
 function drawPie(users) {
 	//Array with the data of internet and non usets
 	chartData = [{name:"Users", value:users}, 
@@ -702,7 +706,7 @@ function drawPie(users) {
 	sections.each(arcSpread);
 }
 
-//Initial graph animation
+//Initial graph animation of the pie chart sections
 function arcSpread(d) {
 	var end = d.endA;
 	d.startAngle = d.startA;
@@ -722,7 +726,7 @@ function arcSpread(d) {
 	      	});
 }
 
-//Outgoing graph animation
+//Outgoing graph animation of the pie chart sections
 function arcVanish(d) {
 	var section = d3.select(this).select("path");
 
@@ -736,10 +740,11 @@ function arcVanish(d) {
 	      	});
 }
 
-// arc in and arc out tween due to different color changes
+// tween return type must be a function with head function(t) and t being between 0 and 1
 function arcTweenOut(d,i) {
-	chartText.text(d.data.value)
-		.attr("dx", -(d.data.value).toString().length/4 + "em");
+	// pie chart text in the middle display selected data value
+	chartText.text(d.data.value+"%")
+		.attr("dx", -((d.data.value).toString()+"%").length/4 + "em");
 
 	var section = d3.select(this);
 
@@ -762,6 +767,7 @@ function arcTweenOut(d,i) {
     	.style("fill", "#FFF");
 }
 
+// tween return type must be a function with head function(t) and t being between 0 and 1
 function arcTweenIn(d,i) {
 	chartText.text("");
 
@@ -800,10 +806,10 @@ function converter(d) {
 	return +d.value; // force cast to number value, just in case
 }
 
-//On hover the section will animate itself
+//On hover over a legend entry, the section will animate itself
 function entryHover(d,i) {
-	chartText.text(d.value)
-		.attr("dx", -(d.value).toString().length/4 + "em");
+	chartText.text(d.value + "%")
+		.attr("dx", -((d.value).toString()+"%").length/4 + "em");
 
 	var section = d3.select(sections[0][i]).select("path");
 
