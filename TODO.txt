@@ -10,6 +10,8 @@
 
 3) Background rect apply negative transition so there is always the background but also vanishes on click on a country
 
+4) map is so big that on the second page elements reach into the page. That can be an issue if the countries paths are too big.
+
 
 //---------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------                  FIXED                 -----------------------------------------------//
