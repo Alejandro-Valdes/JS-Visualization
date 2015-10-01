@@ -553,6 +553,22 @@ function countryClickedOn() {
 
 	var numUsers = 0;
 
+	var dataEx;
+	var apiEx = "http://api.openweathermap.org/data/2.5/weather?q=munich";
+
+	d3.json(apiEx, function(error, json) {
+	  if (error) return console.warn(error);
+	  dataEx = json;
+	  console.log(dataEx);
+	});
+
+	d3.xhr(apiEx)
+	    .responseType('json')
+	    .get( function( error, data ) {
+	        if ( error ) alert('error');
+	        console.log(data.response);
+	} );
+
 	/* ajax api call with jquery (has to be in JSONP to avoid CORS),
 		on success it draws it calls the draw pie function with the data*/
 	$.ajax({
@@ -569,7 +585,7 @@ function countryClickedOn() {
 			showCountryName();
 	    },
 	    error: function(e) {
-	       console.log(e.message);
+	    	console.log(e.message);
 	    }
 	});	
 

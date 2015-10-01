@@ -10,6 +10,9 @@ body {
   line-height: 1.2em;
   background: #222;
   color: #475B62;
+  width: 95%;
+  margin: 0 auto;
+  margin-top:10px;
 }
  
 strong {
@@ -25,12 +28,13 @@ h1, h2, h3, h4, h5, h6 {
 }
  
 p {
+  font-size: 1em;
+  color: #BEF;
   margin-bottom: .5em;
 }
  
 .container {
-  width: 80%;
-  max-width: 1200px;
+  width: 85%;
   margin: 0 auto;
   margin-top:10px;
 }
@@ -45,24 +49,9 @@ p {
   }
 }
 
-.section path {
-  fill: #ccc;
-  stroke: #333;
-  stroke-width: 1.5px;
-  transition: fill 250ms linear;
-  transition-delay: 150ms;
-}
-
-.chart text {
-  font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
-  font-weight: 700;
-  fill: #FFF;
-  font-size: 1em;
-}
-
-#legend {
-  font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, sans-serif;
-  font-weight: 300;
-  fill: #FFF;
-  font-size: 0.8em;
+.bar {
+  fill: steelblue;
+  stroke: #FFF;
+  stroke-width: 1px;
+  cursor: pointer;
 }
