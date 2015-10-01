@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>My title</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<!-- svg drawable area-->
+	<svg width="400" height="200" style="fill: #222;">
+		<circle id="c1" cx="25" cy="25" r="25" style="fill: #FFF;
+		stroke: #FFF;"></circle>
+		<circle id="c5" cx="25" cy="175" r="25" style="fill: #BFF;
+		stroke: #FFF;"></circle>
+	</svg>
+	<script type="text/javascript" src="js/d3.min.js"></script>
+	<script type="text/javascript">
+		d3.select("svg").selectAll("circle").transition()
+			.delay(150)
+			.duration(10000)
+			.ease("bounce")
+			.attr("cx", 375)
+			.attr("cy", 100)
+			.style("fill", "#222");
+	</script>
+</body>
+</html>
