@@ -29,7 +29,7 @@
 		joinDataWithDOM();
 
 		// set the callback function of our button that add elements to our data variable
-		d3.select("#add-btn").on("click", function(d) {
+		d3.select("#add-btn").on("click", function() {
 			for(var i=0; i<Math.floor(Math.random()*8+1); i++) {
 				data.push(Math.round(Math.random()*200));
 			}
@@ -38,7 +38,7 @@
 		});
 
 		// set the callback function of our button that deletes elements from our data variable
-		d3.select("#rm-btn").on("click", function(d) {
+		d3.select("#rm-btn").on("click", function() {
 			data.splice(0, Math.floor(Math.random()*data.length));
 			// call the join function to remove the deleted rectangles from our html 
 			joinDataWithDOM();
