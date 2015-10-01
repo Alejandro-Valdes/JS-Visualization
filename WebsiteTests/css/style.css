@@ -48,10 +48,3 @@ p {
     width: 100%;
   }
 }
-
-.bar {
-  fill: steelblue;
-  stroke: #FFF;
-  stroke-width: 1px;
-  cursor: pointer;
-}
