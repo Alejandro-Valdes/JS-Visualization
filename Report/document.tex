@@ -97,13 +97,13 @@ There are three common approaches to draw data in modern web browsers, they are:
 % HMTL ELEMENTS
 \textbf{HMTL elements} can be styled to represent data. For example a div could be used with different width, height and color style parameters to represent a bar in a bar chart.
 However building a framework solely on HTML elements and styling them is clunky and does not scale well.
-The reason why it doesn't scale well is that complex or round shapes are hard to portray with HTML elements and come with performance issues. These issues are the result of hundreds or thousands pixesl, small HMTL elements you need to create and draw to be able to represent complex shapes.
+The reason why it doesn't scale well is that complex or round shapes are hard to portray with HTML elements and come with performance issues. These issues are the result of hundreds or thousands tiny HMTL elements you need to create and draw to be able to represent complex shapes.
 On the other side a big advantage of HTML elements is that they are supported in every browser.
 They also provide the same functionalities as DOM elements, such as events and other behavior.
 Another advantage of DOM elements is that they can be styled with CSS (Cascading Style Sheet) files.
 \newline
 % CANVAS
-\textbf{Canvas} is a HMTL5 element and can be seen via script as a drawable Bitmap surface.
+\textbf{Canvas} is a HMTL5 element and can be seen as a drawable Bitmap surface.
 It provides different drawing methods that enable the visualization of any shape.
 Canvas however doesn't have any knowledge about the drawn objects, it only draws pixels.
 This means that there are no predefined event callbacks per element that we are used to from DOM elements.
@@ -125,7 +125,7 @@ SVG		& 4.0 & 9.0 & 3.0 &	3.2 & 10.1 \\
 \caption{Support table for Canvas and SVG, only the lowest browser versions are listed that fully support all features.} \label{t:support}
 \end{table}
 
-In comparison Canvas has a faster performance than SVG if a big amount of elements (approximately more than thousand) have to be drawn.
+In comparison Canvas has a better performance than SVG if a big amount of elements (approximately more than thousand) have to be drawn.
 For our project we decided to use SVG over Canvas, because we wanted to create an interactive data visualization with only a small number of elements. As mentioned before, it is very easy to define callback functions for different events such as mouse click or hover events on SVG elements. This helps us to create a more interactive web application in less time.
 
 \subsection{Data visualization libraries}
@@ -168,8 +168,8 @@ The Paper.js library uses the HTML5 Canvas element to draw data.
 \newline
 % WHY D3?
 For our application it was decided to use D3.js, because it has a good, active and big community as well as an excellent documentation with a variety of great examples.
-Many well written tutorials from community members and other external sources can be easily founded, this helped in the understanding of D3's core concepts and their practical application.
-Another important criteria in our case was time. Developing an attractive interactive web application with D3 in conjunction with SVG is very easy and very fast, because SVG elements are DOM elements and D3 uses binds data to DOM elements. More on this subject in the following section \ref{s:d3}.
+Many well written tutorials from community members and other external sources can be easily found, this helped in the understanding of D3's core concepts and their practical application.
+Another important criteria in our case was time. Developing an attractive interactive web application with D3 in conjunction with SVG is very easy and very fast, because SVG elements are DOM elements and D3 binds data to DOM elements. More on this subject in the following section \ref{s:d3}.
 
 
 
@@ -177,13 +177,13 @@ Another important criteria in our case was time. Developing an attractive intera
 As mentioned before, one of the most important libraries for data visualization and the main topic of this paper is the JavaScript library D3. The name D3 stands for Data Driven Documents and its main function is to bind data to DOM elements with the goal of creating stunning interactive data oriented visualizations suitable for the web.
 \newline
 Before diving into the core concepts of D3, a brief history of D3 will be presented.
-D3 was developed in the year 2011, mainly by Mike Bostock and Jeffrey Heer, which were also the developers for D3’s predecessor Protovis.
+D3 was developed in the year 2011, mainly by Mike Bostock and Jeffrey Heer, which were also the developers for D3s predecessor Protovis.
 \newline
-Protovis was developed in the year 2009 amid a growing necessity for new technologies capable of creating visual content for the web, Protovis owned its success to the fact that it was a Plugin-less library. Plugin-less means that it didn’t need a plugin to work while most of the other visualization libraries strictly needed one. Protovis was designed to be accessible to non-programmers as it was a learn by example library.
+Protovis was developed in the year 2009 amid a growing necessity for new technologies capable of creating visual content for the web. Protovis owned its success to the fact that it was a Plugin-less library. Plugin-less means that it didn’t need a plugin to work while most of the other visualization libraries strictly needed one. Protovis was designed to be accessible to non-programmers as it was a learn by example library.
 That design concept was also kept for D3.
 
 \subsection{Loading of external data}
-It was previously stated that D3 stands for Data Driven Documents, but: What exactly is data and how can a developer obtain it? Data are pieces of information that have been collected for analysis,  and the easiest way of representing data using JavaScript is through the use of a variable, of course a developer can also opt for more powerful data structures, such as an array, a matrix or even objects and arrays of objects. This and the use of D3 enables the developer to create simple static data visualizations, or visualizations via user input. A more useful way of retrieving  data for D3 is from a file or through an API call, luckily D3 provides methods to do exactly that.
+It was previously stated that D3 stands for Data Driven Documents, but: What exactly is data and how can a developer obtain it? Data is a collection of information used for analysis. The easiest way of representing data using JavaScript is through the use of a variable, of course a developer can also opt for more powerful data structures, such as an array, a matrix or even objects and arrays of objects. This and the use of D3 enables the developer to create simple static data visualizations, or visualizations via user input. A more useful way of retrieving  data for D3 is from a file or through an API call, luckily D3 provides methods to do exactly that.
 Importing data is often used in combination with API's and databases. Therefore a change in the backend system will result in an updated visualization without any additional programming effort.
 Using for example the csv, html, json, tsv, xml or xhr methods a developer could obtain data from different sources.
 
@@ -218,7 +218,7 @@ This code first selects our body element then it adds a div element to it, from 
 Because selections are based on DOM elements the attribute, style and text method calls on selections will also return the current self reference to the selection of DOM elements.
 
 \subsection{Joins} \label{s:joins}
-D3s main goal is to visualize data. Since different ways used to obtain data and how selections of DOM elements using D3 have been described, the concept of D3's data join can now be discussed. Joins make D3 a powerfull library and it's an important step in the visualization of data, they are made using the \textit{.data([values[, key]])} method.
+D3s main goal is to visualize data. Since different ways how to obtain data and how D3 selections of DOM elements have been described, the concept of D3s data join can now be discussed. Joins make D3 a powerfull library and it's an important step in the visualization of data, they are made using the \textit{.data([values[, key]])} method.
 This method joins data, specified in values, with the selection the method is called upon, it returns a selection again. What this returned selection contains will be explained in the following section.
 \newline
 The value parameter can either be specified as an array containing any kind of information or a function that returns an array.
@@ -342,7 +342,7 @@ All of the visual elements were created with HMTL5 SVG and D3. The data gets pul
 \subsubsection{Disadvantages of D3}
 \hfill \break
 D3 is a very powerful library however it does have its disadvantages. For example, it has a steep learning curve and as it is largely used with SVG elements one could say that it is not IE8 compatible (because of SVG).
-D3 can be used to create charts, but it is not a graphing library, the user should not expect really easy out of the box methods that would do all of the work, such as makePieChart(50,50), D3 requires more work than that. Another big disadvantage is that because it works with the DOM response time can become problem on very large documents.
+D3 can be used to create charts, but it is not a graphing library, the user should not expect really easy out of the box methods that would do all of the work, such as makePieChart(50,50), D3 requires more work than that. Another big disadvantage is that, because it works with the DOM, response time can become problem on very large documents.
 
 \subsubsection{Advantages of D3}
 \hfill \break
