@@ -251,11 +251,11 @@ exitSubSelection.remove();
 \end{lstlisting}
 \end{enumerate}
 
-This seperation of the join into three disjunktive sets allows us to specify precisely what operations have to run on which element. Due to its disjunktive natur this can also improve the performance because we don't have to handle all cases, but pick the case we are interested in.
+This seperation of the join into three disjunktive sets allows us to specify precisely what operations have to run on which elements. Due to its disjunktive natur this can also improve the performance because we don't have to handle all sub selections, but pick the sub selections we are interested in.
 Which brings us back to the meaning of D3, Data Driven Documents.
 As we have seen we can transform documents based on data, e.g. the creation and destruction of DOM elements by calling operators on sub selections, which we obtain via data joins on selections.
-We can also animate those selection over time, based on user interaction and other events.
-The topic of transitions will be discussed in the transitions section \ref{s:transitions}.
+We can also modify them by calling different available operators such as .attr(), .style() and .text() on selections.
+Changes in those selections can be animated via the .transition() operator that we will discuss in the section \ref{s:transitions}.
 
 \begin{figure}[!tpb]
 \centerline{\includegraphics[width=70mm]{vennDiagram.PNG}} %TODO reference to mike bostocks blog
@@ -264,32 +264,29 @@ The topic of transitions will be discussed in the transitions section \ref{s:tra
 
 
 \subsection{Dynamic properties}
-%TODO
-%STRAIGHT COPY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Readers familiar with other DOM frameworks such as jQuery or Prototype should immediately recognize similarities with D3. Yet styles, attributes, and other properties can be specified as functions of data in D3, not just simple constants. Despite their apparent simplicity, these functions can be surprisingly powerful; the d3.geo.path function, for example, projects geographic coordinates into SVG path data. D3 provides many built-in reusable functions and function factories, such as graphical primitives for area, line and pie charts.
+As mentioned in the section before D3 enables us to modify selections dynamically.
+The syntax has many similarities with jQuery, however there exists a big difference.
+Properties such as stlyles, attributes and text can not only be specified as a constant but also as a function of data and the index associated with the element that calls the method.
+To better understand this concept the following example shows how we can use dynamic properties.
+The following code shows how we could set the name and font size of each paragraph to a constant variable.
+We assume we only have three paragraphs in our HTML body.
+\begin{lstlisting}
+d3.select("body").selectAll("p")
+    .text("See")
+    .style("font-size", "8px");
+\end{lstlisting}
+This however might not be want we want. 
+If we want to set the name of each paragraph to a different value and also increase the font size with increasing indice of the paragraph, the code could look something like this:
+\begin{lstlisting}
+d3.select("body").selectAll("p")
+    .data(["See", "The", "World"])
+    .text(function(d) { return d; })
+    .style("font-size", function(d,i) { return (i*4+8) + "px"; });
+\end{lstlisting}
+Here we join the selection with data values which represents our paragraph names. Further we call our text and style operators on the update sub selection that will contain all three p-elements, because we join based on array indices.
+As you can see the operators have a function defined in them. If you define a function D3 will pass this function the self reference of the element (this), the associated data value as first parameter and the global index of the element in the array as second parameter. Both parameters are optional. 
+Based on those informations we define for example the font size in the style property by the base value of 8 pixels plus four times the index of the element.
 
-For example, to randomly color paragraphs:
-
-d3.selectAll("p").style("color", function() {
-  return "hsl(" + Math.random() * 360 + ",100%,50%)";
-});
-
-To alternate shades of gray for even and odd nodes:
-
-d3.selectAll("p").style("color", function(d, i) {
-  return i % 2 ? "#fff" : "#eee";
-});
-
-Computed properties often refer to bound data. Data is specified as an array of values, and each value is passed as the first argument (d) to selection functions. With the default join-by-index, the first element in the data array is passed to the first node in the selection, the second element to the second node, and so on. For example, if you bind an array of numbers to paragraph elements, you can use these numbers to compute dynamic font sizes:
-
-d3.selectAll("p")
-    .data([4, 8, 15, 16, 23, 42])
-    .style("font-size", function(d) { return d + "px"; });
-
-Once the data has been bound to the document, you can omit the data operator; D3 will retrieve the previously-bound data. This allows you to recompute properties without rebinding.
-%TODO end
-
-%OWN TEXT
 
 \subsection{Transitions} \label{s:transitions}
 It has been described how a developer could select an element and change its attributes, however these changes would take place immediately, luckily D3 provides the ability to apply these exacts changes over time, thus achieving an animation effect, the transitions have the following life cycle:
@@ -302,38 +299,40 @@ It has been described how a developer could select an element and change its att
 It is important to notice that transitions are exclusive and only act one given element, so only one transition can be executed at a given time, any new transitions will immediately stop any transitions that were running.
 
 \subsection{Our web application - See the world}
-%TODO
-% short explaination, picture and link to repository
-...
+To demonstrate the amazing powers of D3 we developed a small web application that would allow us to get a feeling of what working with D3 really meant. The application is called “See the World” and is meant to be used to create social conscience for the difference between countries. Using an interactive map users can select any country in the world and click on it to see a grahpical representation of data like how many citizens out of 100 have internet access, or the average yearly income per capita.
+\newline
+All of the visual elements were created with HMTL5 SVG and D3. The data gets pulled from the world bank API, which means an internet connection is needed. To see the source code or simply use the app, got to https://github.com/PhilippMueller1991/JS-Visualization
 
 \subsection{Discussion}
 \subsubsection{Disadvantages of D3}
+\hfill \break
 D3 is a very powerful library however it does have disadvantages for example, it has a steep learning curve and as it is largely used with SVG elements one could say that it is not IE8 compatible, also even though D3 can be used to create charts it’s not a graphing library, the user should not expect really easy out of the box methods that would do all of the work, such as makePieChart(50,50), another big disadvantages is that because it works with the DOM response time can become problem on very large documents.
 
 \subsubsection{Advantages of D3}
+\hfill \break
 However D3 also has a lot of advantages mainly that it has a great community and that because it is not a graphing nor a charting library it gives the user creative freedom to visualize whatever they want, however they want. Other advantages are that it uses commonly known selectors, the transitions and its fast development cycle.
 
 
 \section{Conclusion}
-\subsection{When to use D3}
-...
+Throughout this report we’ve learned about one of the biggest visualization library for JavaScript which in the last couple of years has been used by data visualizers all over the globe to represent data in ways that break past barriers of simple charts and plots.
+We´ve learned about the backbone of D3 and how it allows us not only to create static content, but also dynamic real time applications, and that with the help of its great community and documentation, anyone with some previous JavaScript knowledge can start creating his/her own visualizations, that is if they dedicate enough time to go over the steep learning curve.
+
+To finish this report it’s necessary to point out in which cases it’s better to opt for other technologies.
+
 \subsection{When not to use D3}
-...
+\hfill \break
+\begin{enumerate}
+\item No time to learn
+\item Advanced big data operations are needed
+\item Real graphing software is needed
+\end{enumerate}
 
+\subsection{When to use D3}
+\hfill \break
+\begin{enumerate}
+\item Visualization of basically anything
+\item Creativity is needed
+\item Quick prototyping
+\end{enumerate}
 
-
-
-%\bibliographystyle{natbib}
-%\bibliographystyle{achemnat}
-%\bibliographystyle{plainnat}
-%\bibliographystyle{abbrv}
-%\bibliographystyle{bioinformatics}
-%
-%\bibliographystyle{plain}
-%
-%\bibliography{Document}
-
-%\begin{thebibliography}{}
-%http://d3js.org/
-%\end{thebibliography}
 \end{document}

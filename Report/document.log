@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.4.6)  7 OCT 2015 18:07
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.4.6)  7 OCT 2015 20:33
 entering extended mode
 **document.tex
 (C:\Users\Feanor\Desktop\js_report\document.tex
@@ -660,11 +660,6 @@ File: vennDiagram.PNG Graphic file (type png)
 Package pdftex.def Info: vennDiagram.PNG used on input line 261.
 (pdftex.def)             Requested size: 199.16928pt x 134.82489pt.
 
-Underfull \hbox (badness 4505) in paragraph at lines 273--276
-[]\OT1/ptm/m/n/9 d3.selectAll("p").style("color", function()  return "hsl(" +
- []
-
-
 Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
  []
@@ -673,20 +668,51 @@ Overfull \hbox (261.0pt too wide) has occurred while \output is active
 Overfull \vbox (1.0pt too high) has occurred while \output is active []
 
  [3 <C:/Users/Feanor/Desktop/js_report/vennDiagram.PNG>]
-Underfull \hbox (badness 3612) in paragraph at lines 297--298
+Underfull \hbox (badness 3612) in paragraph at lines 294--295
 []\OT1/ptm/m/n/9 The tran-si-tion is sch-e-du-led. (Gets sch-e-dule with sele-
  []
 
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
+Missing character: There is no œ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no  in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
-Extra height:0.0pt when 323.10342pt
-(2)Left:323.10342pt Right:313.20685pt Output:323.10342pt
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+Missing character: There is no Â in font ptmr7t!
+Missing character: There is no ´ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 323--325
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 331--333
+
+ []
+
+Extra height:36.94843pt when 595.64842pt
+Extra height:36.94843pt when 596.64842pt
+Extra height:22.94843pt when 597.64842pt
+Extra height:22.94843pt when 598.64842pt
+Extra height:0.0pt when 599.64842pt
+(2)Left:599.64842pt Right:578.89685pt Output:599.64842pt
 - LAST -
 Extra skip:0.0pt
-Left:323.10342pt
-Right:313.20685pt
-Output:323.10342pt
+Left:599.64842pt
+Right:578.89685pt
+Output:599.64842pt
 
 Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
@@ -707,10 +733,10 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 13995 strings out of 493921
- 261046 string characters out of 3152894
- 330322 words of memory out of 3000000
- 17004 multiletter control sequences out of 15000+200000
+ 13998 strings out of 493921
+ 261068 string characters out of 3152894
+ 397322 words of memory out of 3000000
+ 17007 multiletter control sequences out of 15000+200000
  37845 words of font info for 69 fonts, out of 3000000 for 9000
  845 hyphenation exceptions out of 8191
  55i,11n,54p,615b,1043s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -722,7 +748,7 @@ MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/
 helvetic/uhvr8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb><E:/MiK
 TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/u
 tmr8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on document.pdf (4 pages, 400755 bytes).
+Output written on document.pdf (4 pages, 404743 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
