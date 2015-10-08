@@ -1,9 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.4.6)  8 OCT 2015 23:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.4.6)  9 OCT 2015 00:38
 entering extended mode
 **document.tex
-
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\docum
-ent.tex"
+(C:\Users\Feanor\Desktop\js_report\document.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -15,22 +13,20 @@ german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
 ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
 an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
-
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\bioin
-fo.cls"
+(C:\Users\Feanor\Desktop\js_report\bioinfo.cls
 Document Class: bioinfo 2003/02/08 0.1
 ("E:\MiKTeX 2.9\tex\latex\base\inputenc.sty"
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
 )
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\crop.
-sty"
+(C:\Users\Feanor\Desktop\js_report\crop.sty
 Package: crop 2001/11/16 v1.6 cropmarks (mf)
 \CROP@width=\dimen102
 \CROP@height=\dimen103
 \CROP@index=\count79
- ("E:\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+
+("E:\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
 ("E:\MiKTeX 2.9\tex\latex\graphics\trig.sty"
@@ -55,14 +51,13 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \CROP@offset=\count81
 Package crop Info: Local config file crop.cfg used on input line 344.
 
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\crop.
-cfg"))
+(C:\Users\Feanor\Desktop\js_report\crop.cfg))
 Package crop Info: using pdf(la)tex graphics driver on input line 33.
 
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\graph
-icx.sty"
+(C:\Users\Feanor\Desktop\js_report\graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
- ("E:\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+
+("E:\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks16
 )
@@ -127,8 +122,7 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\array
-.sty"
+(C:\Users\Feanor\Desktop\js_report\array.sty
 Package: array 1998/05/13 v2.3m Tabular extension package (FMi)
 \col@sep=\dimen115
 \extrarowheight=\dimen116
@@ -136,10 +130,10 @@ Package: array 1998/05/13 v2.3m Tabular extension package (FMi)
 \extratabsurround=\skip44
 \backup@length=\skip45
 )
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\color
-.sty"
+(C:\Users\Feanor\Desktop\js_report\color.sty
 Package: color 1999/02/16 v1.0i Standard LaTeX Color (DPC)
- ("E:\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+
+("E:\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 125.
@@ -154,8 +148,7 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\flush
-end.sty"
+(C:\Users\Feanor\Desktop\js_report\flushend.sty
 Package: flushend 1997/10/01
 \@aaa=\box28
 \@ccc=\box29
@@ -165,12 +158,12 @@ Package: flushend 1997/10/01
 \@extra@skip=\dimen117
 \@nd@page@rule=\dimen118
 )
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\stflo
-ats.sty"
+(C:\Users\Feanor\Desktop\js_report\stfloats.sty
 Package: stfloats 1999/10/22
 \@dblbotnum=\count94
 \c@dblbotnumber=\count95
-) ("E:\MiKTeX 2.9\tex\latex\amscls\amsthm.sty"
+)
+("E:\MiKTeX 2.9\tex\latex\amscls\amsthm.sty"
 Package: amsthm 2004/08/06 v2.20
 \thm@style=\toks24
 \thm@bodyfont=\toks25
@@ -182,14 +175,12 @@ Package: amsthm 2004/08/06 v2.20
 \thm@headsep=\skip48
 \dth@everypar=\toks29
 )
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\chngp
-age.sty"
+(C:\Users\Feanor\Desktop\js_report\chngpage.sty
 Package: chngpage 2001/01/31 v1.1b change page layout
 \c@cp@cnt=\count96
 \c@cp@tempcnt=\count97
 )
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\times
-.sty"
+(C:\Users\Feanor\Desktop\js_report\times.sty
 Package: times 2000/01/12 PSNFSS-v8.1 Times font as default roman (SPQR) 
 )
 \c@section=\count98
@@ -208,14 +199,14 @@ Package: times 2000/01/12 PSNFSS-v8.1 Times font as default roman (SPQR)
 \tempdime=\dimen120
 \temptbox=\box32
 
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\natbi
-b.sty"
+(C:\Users\Feanor\Desktop\js_report\natbib.sty
 Package: natbib 2000/07/24 7.0a (PWD)
 \bibhang=\skip54
 \bibsep=\skip55
 LaTeX Info: Redefining \cite on input line 508.
 \c@NAT@ctr=\count105
-)) ("E:\MiKTeX 2.9\tex\latex\pgf\frontendlayer\tikz.sty"
+))
+("E:\MiKTeX 2.9\tex\latex\pgf\frontendlayer\tikz.sty"
 ("E:\MiKTeX 2.9\tex\latex\pgf\basiclayer\pgf.sty"
 ("E:\MiKTeX 2.9\tex\latex\pgf\utilities\pgfrcs.sty"
 ("E:\MiKTeX 2.9\tex\generic\pgf\utilities\pgfutil-common.tex"
@@ -494,8 +485,7 @@ File: listings.cfg 2014/03/04 1.5c listings configuration
 ))
 Package: listings 2014/03/04 1.5c (Carsten Heinz)
 
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\docum
-ent.aux")
+(C:\Users\Feanor\Desktop\js_report\document.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
@@ -509,7 +499,8 @@ LaTeX Font Info:    ... okay on input line 49.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 49.
- ("E:\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
+
+("E:\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 ("E:\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
@@ -605,14 +596,14 @@ LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <7> not available
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
- <C:/Users/Feanor/Desktop/javascript technologies/JS-Visualization/Report/abacu
-s.jpg>]
+ <C:/Users/Feanor/Desktop/js_report/abacus.jpg>]
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 194.
 
- ("E:\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
+
+("E:\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <8> not available
@@ -701,43 +692,39 @@ Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
  []
 
-[4 <C:/Users/Feanor/Desktop/javascript technologies/JS-Visualization/Report/ven
-nDiagram.PNG>]
-Extra height:10.0pt when 299.47421pt
-Extra height:10.0pt when 300.47421pt
-Extra height:10.0pt when 301.47421pt
-Extra height:10.0pt when 302.47421pt
-Extra height:10.0pt when 303.47421pt
-Extra height:10.0pt when 304.47421pt
-Extra height:10.0pt when 305.47421pt
+[4 <C:/Users/Feanor/Desktop/js_report/vennDiagram.PNG>]
+Overfull \hbox (115.79367pt too wide) in paragraph at lines 383--383
+ []\OT1/pcr/m/n/7 https://docs.google.com/presentation/d/151Z6lrICgrkSHJsn-38SE
+HfP-F_176L-o1IYjL9GcDM/ 
+ []
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 306.47421pt
+Extra height:26.09895pt when 437.59895pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 307.47421pt
+Extra height:26.09895pt when 438.59895pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 308.47421pt
+Extra height:26.09895pt when 439.59895pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:0.0pt when 309.47421pt
+Extra height:26.09895pt when 440.59895pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-(2)Left:309.47421pt Right:308.94843pt Output:309.47421pt
+Extra height:26.09895pt when 441.59895pt
+Extra height:0.0pt when 442.59895pt
+(2)Left:442.59895pt Right:420.1979pt Output:442.59895pt
 - LAST -
 Extra skip:0.0pt
-Left:309.47421pt
-Right:308.94843pt
-Output:309.47421pt
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+Left:442.59895pt
+Right:420.1979pt
+Output:442.59895pt
 
 Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
@@ -746,22 +733,19 @@ Overfull \hbox (261.0pt too wide) has occurred while \output is active
 
 Overfull \vbox (1.0pt too high) has occurred while \output is active []
 
- [5
-
-]
-("C:\Users\Feanor\Desktop\javascript technologies\JS-Visualization\Report\docum
-ent.aux")
+ [5]
+(C:\Users\Feanor\Desktop\js_report\document.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.5pt have occurred.
 
  ) 
 Here is how much of TeX's memory you used:
- 14003 strings out of 493921
- 262225 string characters out of 3152894
- 403334 words of memory out of 3000000
- 17012 multiletter control sequences out of 15000+200000
- 37845 words of font info for 69 fonts, out of 3000000 for 9000
+ 14017 strings out of 493921
+ 261247 string characters out of 3152894
+ 403468 words of memory out of 3000000
+ 17024 multiletter control sequences out of 15000+200000
+ 39945 words of font info for 73 fonts, out of 3000000 for 9000
  845 hyphenation exceptions out of 8191
  55i,11n,54p,678b,1594s stack positions out of 5000i,500n,10000p,200000b,50000s
 {E:/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<E:/MiKTeX 2.9/fonts/type1/pub
@@ -774,7 +758,7 @@ pe1/urw/helvetic/uhvb8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb
 urw/helvetic/uhvro8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><E:/Mi
 KTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/
 utmri8a.pfb>
-Output written on document.pdf (5 pages, 428751 bytes).
+Output written on document.pdf (5 pages, 431932 bytes).
 PDF statistics:
  78 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
