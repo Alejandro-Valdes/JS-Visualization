@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.4.6)  7 OCT 2015 20:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.4.6)  8 OCT 2015 20:08
 entering extended mode
 **document.tex
 (C:\Users\Feanor\Desktop\js_report\document.tex
@@ -578,60 +578,43 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 88.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 99.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 98.
 
-Overfull \hbox (1.52274pt too wide) in paragraph at lines 121--127
+Overfull \hbox (1.52274pt too wide) in paragraph at lines 119--125
 [][] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Font Info:    Try loading font information for OMS+phv on input line 133.
-
+LaTeX Font Info:    Try loading font information for OMS+phv on input line 130.
 
 ("E:\MiKTeX 2.9\tex\latex\psnfss\omsphv.fd"
 File: omsphv.fd 
 )
 LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 133.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 130.
  [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
  <C:/Users/Feanor/Desktop/js_report/abacus.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 155--179
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 155--179
-
- []
-
 Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ô in font ptmr7t!
 Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ô in font ptmr7t!
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 194.
 
-Underfull \hbox (badness 10000) in paragraph at lines 183--188
-
- []
-
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 207.
 
 ("E:\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <8> not available
-(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 208.
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 195.
 LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <8> not available
-(Font)              Font shape `OT1/phv/b/it' tried instead on input line 214.
+(Font)              Font shape `OT1/phv/b/it' tried instead on input line 209.
 LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <8> not available
-(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 214.
+(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 209.
 
 Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
@@ -646,19 +629,11 @@ Overfull \hbox (261.0pt too wide) has occurred while \output is active
  []
 
 [2]
-Missing character: There is no ¬ in font ptmr7t!
-Missing character: There is no ¥ in font ptmr7t!
-
-Underfull \hbox (badness 5446) in paragraph at lines 229--231
+Underfull \hbox (badness 5446) in paragraph at lines 263--265
 []\OT1/ptm/m/n/9 The \OT1/ptm/b/n/9 update \OT1/ptm/m/n/9 sub sele-ction is obt
 ai-ned by cal-ling the
  []
 
-<vennDiagram.PNG, id=22, 755.07094pt x 511.15968pt>
-File: vennDiagram.PNG Graphic file (type png)
- <use vennDiagram.PNG>
-Package pdftex.def Info: vennDiagram.PNG used on input line 261.
-(pdftex.def)             Requested size: 199.16928pt x 134.82489pt.
 
 Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
@@ -667,8 +642,14 @@ Overfull \hbox (261.0pt too wide) has occurred while \output is active
 
 Overfull \vbox (1.0pt too high) has occurred while \output is active []
 
- [3 <C:/Users/Feanor/Desktop/js_report/vennDiagram.PNG>]
-Underfull \hbox (badness 3612) in paragraph at lines 294--295
+ [3]
+<vennDiagram.PNG, id=26, 755.07094pt x 511.15968pt>
+File: vennDiagram.PNG Graphic file (type png)
+ <use vennDiagram.PNG>
+Package pdftex.def Info: vennDiagram.PNG used on input line 295.
+(pdftex.def)             Requested size: 199.16928pt x 134.82489pt.
+
+Underfull \hbox (badness 3612) in paragraph at lines 328--329
 []\OT1/ptm/m/n/9 The tran-si-tion is sch-e-du-led. (Gets sch-e-dule with sele-
  []
 
@@ -678,41 +659,26 @@ Missing character: There is no ú in font ptmr7t!
 Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ù in font ptmr7t!
-Missing character: There is no ‚ in font ptmr7t!
-Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ô in font ptmr7t!
-Missing character: There is no ‚ in font ptmr7t!
-Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ô in font ptmr7t!
-Missing character: There is no ¬ in font ptmr7t!
-Missing character: There is no ¥ in font ptmr7t!
-Missing character: There is no ‚ in font ptmr7t!
-Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ô in font ptmr7t!
-Missing character: There is no ‚ in font ptmr7t!
-Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ô in font ptmr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--325
-
+Underfull \hbox (badness 1810) in paragraph at lines 337--340
+\OT1/ptm/m/n/9 All of the visual ele-ments were cre-a-ted with HMTL5 SVG
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 331--333
-
+Underfull \hbox (badness 3108) in paragraph at lines 337--340
+\OT1/ptm/m/n/9 and D3. The data gets pul-led from the world bank API,
  []
 
-Extra height:36.94843pt when 595.64842pt
-Extra height:36.94843pt when 596.64842pt
-Extra height:22.94843pt when 597.64842pt
-Extra height:22.94843pt when 598.64842pt
-Extra height:0.0pt when 599.64842pt
-(2)Left:599.64842pt Right:578.89685pt Output:599.64842pt
-- LAST -
-Extra skip:0.0pt
-Left:599.64842pt
-Right:578.89685pt
-Output:599.64842pt
+
+Underfull \hbox (badness 1590) in paragraph at lines 337--340
+\OT1/ptm/m/n/9 which means an inter-net con-ne-ction is requi-red. To see the
+ []
+
+
+Underfull \hbox (badness 5403) in paragraph at lines 337--340
+\OT1/ptm/m/n/9 sou-rce code or sim-ply check out the appli-ca-tion, go to
+ []
+
 
 Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
@@ -726,31 +692,92 @@ Overfull \hbox (261.0pt too wide) has occurred while \output is active
 [][] 
  []
 
-[4] (C:\Users\Feanor\Desktop\js_report\document.aux)
+[4 <C:/Users/Feanor/Desktop/js_report/vennDiagram.PNG>]
+Extra height:10.0pt when 266.47421pt
+Extra height:10.0pt when 267.47421pt
+Extra height:10.0pt when 268.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 269.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 270.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 271.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 272.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 273.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 274.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 275.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:0.0pt when 276.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+(2)Left:276.47421pt Right:275.94843pt Output:276.47421pt
+- LAST -
+Extra skip:0.0pt
+Left:276.47421pt
+Right:275.94843pt
+Output:276.47421pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (261.0pt too wide) has occurred while \output is active
+[][] 
+ []
+
+
+Overfull \vbox (1.0pt too high) has occurred while \output is active []
+
+ [5
+
+]
+(C:\Users\Feanor\Desktop\js_report\document.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.5pt have occurred.
 
  ) 
 Here is how much of TeX's memory you used:
- 13998 strings out of 493921
- 261068 string characters out of 3152894
- 397322 words of memory out of 3000000
- 17007 multiletter control sequences out of 15000+200000
+ 14003 strings out of 493921
+ 261123 string characters out of 3152894
+ 408334 words of memory out of 3000000
+ 17012 multiletter control sequences out of 15000+200000
  37845 words of font info for 69 fonts, out of 3000000 for 9000
  845 hyphenation exceptions out of 8191
- 55i,11n,54p,615b,1043s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,11n,54p,607b,1377s stack positions out of 5000i,500n,10000p,200000b,50000s
 {E:/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<E:/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.p
-fb><E:/MiKTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><E:/MiKTeX 2.9/fonts/type1
-/urw/courier/ucrr8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><E:/
-MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/
-helvetic/uhvr8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb><E:/MiK
-TeX 2.9/fonts/type1/urw/times/utmb8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/u
-tmr8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on document.pdf (4 pages, 404743 bytes).
+lic/amsfonts/cm/cmmi9.pfb><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pf
+b><E:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><E:/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmsy9.pfb><E:/MiKTeX 2.9/fonts/type1/urw/courier/ucrb8
+a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><E:/MiKTeX 2.9/fonts/ty
+pe1/urw/helvetic/uhvb8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb
+><E:/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><E:/MiKTeX 2.9/fonts/type1/
+urw/helvetic/uhvro8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><E:/Mi
+KTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><E:/MiKTeX 2.9/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on document.pdf (5 pages, 428545 bytes).
 PDF statistics:
- 67 PDF objects out of 1000 (max. 8388607)
+ 78 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 
